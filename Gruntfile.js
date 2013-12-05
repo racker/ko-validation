@@ -6,15 +6,22 @@ module.exports = function(grunt) {
       options: {
         configFile: 'karma.conf.js',
         runnerPort: 9999,
-        browsers: ['Chrome', 'Firefox']
       },
       all: {
-        singleRun: true
+        background: true,
+        browsers: ['Chrome', 'Firefox']
+      }
+    },
+    watch: {
+      tests: {
+        files: ['spec/**/*.js', 'src/**/*.js'],
+        task: ['karma:run']
       }
     }
   });
 
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('default', ['karma']);
 };
