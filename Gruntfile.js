@@ -11,6 +11,10 @@ module.exports = function(grunt) {
         reporters: 'dots',
         background: true,
         browsers: ['Chrome', 'Firefox']
+      },
+      ci: {
+        singleRun: true,
+        browsers: ['PhantomJS']
       }
     },
     watch: {

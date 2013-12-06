@@ -4,7 +4,7 @@
   "description": "Knockout Validation Plugin for the Rackspace Control Panel",
   "main": "index.js",
   "scripts": {
-    "test": "grunt karma"
+    "test": "grunt karma:ci"
   },
   "repository": {
     "type": "git",
