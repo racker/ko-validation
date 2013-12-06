@@ -14,12 +14,15 @@ describe('ko-validation', function () {
   };
 
   it('allows registering validators', function () {
-    var observable;
+    var validatorType, validator, observable;
 
-    ko.validation.registerValidator('required', RequiredValidator);
+    validator = {};
+    validatorType = jasmine.createSpy('validator').andReturn(validator);
+    ko.validation.registerValidator('validator-type', validatorType);
 
-    observable = ko.observable().extend({ required: ['Value is required!'] });
-    expect(observable.__validators__).toContain(new RequiredValidator('Value is required!'));
+    observable = ko.observable().extend({ 'validator-type': ['Value is required!'] });
+    expect(validatorType).toHaveBeenCalledWith('Value is required!');
+    expect(observable.__validators__).toContain(validator);
   });
 
   describe('validating an input', function () {
