@@ -18,8 +18,8 @@ describe('ko-validation', function () {
 
     ko.validation.registerValidator('required', RequiredValidator);
 
-    observable = ko.observable().extend({ required: [''] });
-    expect(observable.__validators__).toContain(new RequiredValidator(''));
+    observable = ko.observable().extend({ required: ['Value is required!'] });
+    expect(observable.__validators__).toContain(new RequiredValidator('Value is required!'));
   });
 
   describe('validating an input', function () {
