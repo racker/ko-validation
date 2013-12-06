@@ -86,5 +86,46 @@ describe('ko-validation', function () {
         expect(observable.validationMessage()).toBe('');
       });
     });
+
+    describe('when the input has multiple validators', function () {
+      var GreaterThanValidator;
+
+      GreaterThanValidator = function (greaterThanValue, message) {
+        this.message = message;
+        this.greaterThanValue = greaterThanValue;
+      };
+
+      GreaterThanValidator.prototype.validate = function (value) {
+        var message = this.message;
+        var greaterThanValue = this.greaterThanValue;
+        return {
+          isValid: function () { return value > greaterThanValue; },
+          getMessage: function () { return message; }
+        };
+      };
+
+      beforeEach(function () {
+        ko.validation.registerValidator('greaterThan', GreaterThanValidator);
+        observable.extend({ 'greaterThan': [10, 'Must be greater than 10'] });
+      });
+
+      it('sets the validation message for the first validator that fails', function () {
+        $('#input').val('').trigger('change');
+        expect(observable.isValid()).toBe(false);
+        expect(observable.validationMessage()).toBe('Value is required');
+      });
+
+      it('sets the validation of the second validator when the first one is valid', function () {
+        $('#input').val(9).trigger('change');
+        expect(observable.isValid()).toBe(false);
+        expect(observable.validationMessage()).toBe('Must be greater than 10');
+      });
+
+      it('sets the observable to valid state when all validators pass', function () {
+        $('input').val(11).trigger('change');
+        expect(observable.isValid()).toBe(true);
+        expect(observable.validationMessage()).toBe('');
+      });
+    });
   });
 });
