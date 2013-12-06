@@ -8,6 +8,7 @@ module.exports = function(grunt) {
         runnerPort: 9999,
       },
       all: {
+        reporters: 'dots',
         background: true,
         browsers: ['Chrome', 'Firefox']
       }
@@ -15,7 +16,7 @@ module.exports = function(grunt) {
     watch: {
       tests: {
         files: ['spec/**/*.js', 'src/**/*.js'],
-        task: ['karma:run']
+        tasks: ['karma:all:run']
       }
     }
   });
@@ -23,5 +24,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['karma']);
+  grunt.registerTask('default', ['karma:all', 'watch']);
 };
