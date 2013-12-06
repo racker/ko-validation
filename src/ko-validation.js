@@ -1,6 +1,3 @@
-var ko = ko || {};
-ko.validation = ko.validation || {};
-
 ko.validation.validationStates = {
   PRISTINE: 'pristine',
   INVALID: 'invalid',
