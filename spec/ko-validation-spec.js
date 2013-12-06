@@ -6,9 +6,10 @@ describe('ko-validation', function () {
   };
 
   RequiredValidator.prototype.validate = function (value) {
+    var message = this.message;
     return {
       isValid: function () { return !!value; },
-      getMessage: function () { return this.message; }
+      getMessage: function () { return message; }
     };
   };
 
@@ -21,7 +22,7 @@ describe('ko-validation', function () {
     expect(observable.__validators__).toContain(new RequiredValidator(''));
   });
 
-  describe('validation states', function () {
+  describe('validating an input', function () {
     var observable, viewModel;
 
     beforeEach(function () {
@@ -32,44 +33,58 @@ describe('ko-validation', function () {
 
       setFixtures('<div id="parent"><input id="input" data-bind="value: obs"/></div>');
       ko.applyBindings(viewModel, $('#parent')[0]);
-
     });
 
-    it('is pristine', function () {
-      expect(observable.validationState()).toBe(ko.validation.validationStates.PRISTINE);
-    });
+    describe('validation states', function () {
 
-    it('is invalid', function () {
-      $('#input').val('').trigger('change');
+      it('is pristine', function () {
+        expect(observable.validationState()).toBe(ko.validation.validationStates.PRISTINE);
+        expect(observable.isValid()).toBe(true);
+        expect(observable.validationMessage()).toBe('');
+      });
 
-      expect(observable.validationState()).toBe(ko.validation.validationStates.INVALID);
-    });
+      it('is invalid', function () {
+        $('#input').val('').trigger('change');
 
-    it('is valid', function () {
-      $('#input').val('value').trigger('change');
+        expect(observable.validationState()).toBe(ko.validation.validationStates.INVALID);
+        expect(observable.isValid()).toBe(false);
+        expect(observable.validationMessage()).toBe('Value is required');
+      });
 
-      expect(observable.validationState()).toBe(ko.validation.validationStates.VALID);
-    });
+      it('is valid', function () {
+        $('#input').val('value').trigger('change');
 
-    it('stays valid after it is changed from a valid state to another valid state', function () {
-      $('#input').val('value1').trigger('change');
-      $('#input').val('value2').trigger('change');
+        expect(observable.validationState()).toBe(ko.validation.validationStates.VALID);
+        expect(observable.isValid()).toBe(true);
+        expect(observable.validationMessage()).toBe('');
+      });
 
-      expect(observable.validationState()).toBe(ko.validation.validationStates.VALID);
-    });
+      it('stays valid after it is changed from a valid state to another valid state', function () {
+        $('#input').val('value1').trigger('change');
+        $('#input').val('value2').trigger('change');
 
-    it('goes back to invalid after being valid', function () {
-      $('#input').val('value').trigger('change');
-      $('#input').val('').trigger('change');
+        expect(observable.validationState()).toBe(ko.validation.validationStates.VALID);
+        expect(observable.isValid()).toBe(true);
+        expect(observable.validationMessage()).toBe('');
+      });
 
-      expect(observable.validationState()).toBe(ko.validation.validationStates.INVALID);
-    });
+      it('goes back to invalid after being valid', function () {
+        $('#input').val('value').trigger('change');
+        $('#input').val('').trigger('change');
 
-    it('goes to fixed after being invalid', function () {
-      $('#input').val('').trigger('change');
-      $('#input').val('value').trigger('change');
+        expect(observable.validationState()).toBe(ko.validation.validationStates.INVALID);
+        expect(observable.isValid()).toBe(false);
+        expect(observable.validationMessage()).toBe('Value is required');
+      });
 
-      expect(observable.validationState()).toBe(ko.validation.validationStates.FIXED);
+      it('goes to fixed after being invalid', function () {
+        $('#input').val('').trigger('change');
+        $('#input').val('value').trigger('change');
+
+        expect(observable.validationState()).toBe(ko.validation.validationStates.FIXED);
+        expect(observable.isValid()).toBe(true);
+        expect(observable.validationMessage()).toBe('');
+      });
     });
   });
 });
