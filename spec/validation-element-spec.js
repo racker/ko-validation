@@ -39,8 +39,8 @@ describe('Validation message element', function () {
 
       validationElement = $($('#parent').children()[1]);
       expect(validationElement.text()).toBe('First Name is required');
-      expect(validationElement.hasClass('validation-message')).toBe(true);
-      expect(validationElement.hasClass('validation-error')).toBe(true);
+      expect(validationElement).toHaveClass('validation-message');
+      expect(validationElement).toHaveClass('validation-error');
     });
 
     it('changes the element class to "validation-fixed" when the observable is fixed', function () {
@@ -51,8 +51,8 @@ describe('Validation message element', function () {
 
       validationElement = $($('#parent').children()[1]);
       expect(validationElement.text()).toBe('');
-      expect(validationElement.hasClass('validation-message')).toBe(true);
-      expect(validationElement.hasClass('validation-fixed')).toBe(true);
+      expect(validationElement).toHaveClass('validation-message');
+      expect(validationElement).toHaveClass('validation-fixed');
     });
   });
 
@@ -78,8 +78,8 @@ describe('Validation message element', function () {
       $('#firstName').val('').trigger('change');
 
       expect(messageElement.text()).toBe('First Name is required');
-      expect(messageElement.hasClass('validation-message')).toBe(true);
-      expect(messageElement.hasClass('validation-error')).toBe(true);
+      expect(messageElement).toHaveClass('validation-message');
+      expect(messageElement).toHaveClass('validation-error');
     });
 
     it('changes the element class to validation-fixed when the errors are fixed', function () {
@@ -87,8 +87,8 @@ describe('Validation message element', function () {
       $('#firstName').val('Chuck').trigger('change');
 
       expect(messageElement.text()).toBe('');
-      expect(messageElement.hasClass('validation-message')).toBe(true);
-      expect(messageElement.hasClass('validation-fixed')).toBe(true);
+      expect(messageElement).toHaveClass('validation-message');
+      expect(messageElement).toHaveClass('validation-fixed');
     });
   });
 });
