@@ -1,49 +1,28 @@
 var ko = ko || {};
+ko.validation = ko.validation || {};
 
-ko.validation = (function () {
+ko.validation.validationStates = {
+  PRISTINE: 'pristine',
+  INVALID: 'invalid',
+  VALID: 'valid',
+  FIXED: 'fixed'
+};
+
+ko.validation.registeredValidators = {};
+
+ko.validation.utils = (function () {
   var self = {};
-  var registeredValidators = {};
 
-  self.validationStates = {
-    PRISTINE: 'pristine',
-    INVALID: 'invalid',
-    VALID: 'valid',
-    FIXED: 'fixed'
-  };
-
-  self.registerValidator = function (name, validatorClass) {
-    registeredValidators[name] = validatorClass;
-    ko.extenders[name] = function (observable, param) {
-      var isFirstValidatorForObservable = !observable.__validators__;
-
-      if (isFirstValidatorForObservable) {
-        observable.__validators__ = [];
-        observable.validationState = ko.observable(self.validationStates.PRISTINE);
-        observable.validationMessage = ko.observable('');
-        observable.isValid = ko.computed(function () {
-          return observable.validationState() !== self.validationStates.INVALID;
-        });
-      }
-
-      var validator = self.utils.createValidator(name, param);
-      observable.__validators__.push(validator);
-
-      return observable;
-    };
-  };
-
-  self.utils = {};
-
-  self.utils.validatesOtherObservable = function (observable) {
+  self.validatesOtherObservable = function (observable) {
     return !!observable.__validates__;
   };
 
-  self.utils.hasValidators = function (observable) {
+  self.hasValidators = function (observable) {
     return observable.__validators__ && observable.validationState;
   };
 
-  self.utils.createValidator = function (name, params) {
-    var validatorClass = registeredValidators[name];
+  self.createValidator = function (name, params) {
+    var validatorClass = ko.validation.registeredValidators[name];
     if (typeof(validatorClass) !== 'function') {
       throw 'Cannot create validator. Invalid validator class: ' + validatorClass;
     }
@@ -54,8 +33,8 @@ ko.validation = (function () {
     return new F();
   };
 
-  self.utils.runValidations = function (observable) {
-    if (self.utils.hasValidators(observable)) {
+  self.runValidations = function (observable) {
+    if (self.hasValidators(observable)) {
       var i, validator, validationResult, currentState;
 
       for (i = 0; i < observable.__validators__.length; i++) {
@@ -63,22 +42,47 @@ ko.validation = (function () {
         validationResult = validator.validate(observable());
         if (!validationResult.isValid()) {
           observable.validationMessage(validationResult.getMessage());
-          observable.validationState(self.validationStates.INVALID);
+          observable.validationState(ko.validation.validationStates.INVALID);
           return;
         }
       }
 
       currentState = observable.validationState();
-      if (currentState !== self.validationStates.VALID) {
+      if (currentState !== ko.validation.validationStates.VALID) {
         observable.validationMessage('');
-        observable.validationState(currentState === self.validationStates.INVALID ?
-          self.validationStates.FIXED :
-          self.validationStates.VALID
+        observable.validationState(currentState === ko.validation.validationStates.INVALID ?
+          ko.validation.validationStates.FIXED :
+          ko.validation.validationStates.VALID
         );
       }
     }
   };
 
+  return self;
+}) ();
+
+ko.validation.registerValidator = function (name, validatorClass) {
+  ko.validation.registeredValidators[name] = validatorClass;
+  ko.extenders[name] = function (observable, param) {
+    var isFirstValidatorForObservable = !observable.__validators__;
+
+    if (isFirstValidatorForObservable) {
+      observable.__validators__ = [];
+      observable.validationState = ko.observable(ko.validation.validationStates.PRISTINE);
+      observable.validationMessage = ko.observable('');
+      observable.isValid = ko.computed(function () {
+        return observable.validationState() !== ko.validation.validationStates.INVALID;
+      });
+    }
+
+    var validator = ko.validation.utils.createValidator(name, param);
+    observable.__validators__.push(validator);
+
+    return observable;
+  };
+};
+
+(function () {
   function insertOrGetMessageElementAt(element) {
     var validationElement = element.querySelector('.validation-message');
     if (!validationElement) {
@@ -101,8 +105,8 @@ ko.validation = (function () {
       for (propertyName in viewModel) {
         if (viewModel.hasOwnProperty(propertyName)) {
           observable = viewModel[propertyName];
-          if (self.utils.hasValidators(observable)) {
-            self.utils.runValidations(observable);
+          if (ko.validation.utils.hasValidators(observable)) {
+            ko.validation.utils.runValidations(observable);
             valid = observable.isValid() && valid;
           }
         }
@@ -112,20 +116,12 @@ ko.validation = (function () {
     };
   }
 
-  ko.extenders['validatesAfter'] = function (observable, param) {
-    ko.utils.arrayForEach(param, function (dependencyObservable) {
-      dependencyObservable.__validates__ = dependencyObservable.__validates__ || [];
-      dependencyObservable.__validates__.push(observable);
-    });
-    return observable;
-  };
-
   function bindEventListenerToRunValidation(element, observableToValidate) {
     var elementType = element.getAttribute('type');
     var eventName = (elementType && elementType.toLowerCase() === 'checkbox') ? 'click' : 'change';
     ko.utils.registerEventHandler(element, eventName, function (event) {
-      if (self.utils.hasValidators(observableToValidate)) {
-        self.utils.runValidations(observableToValidate);
+      if (ko.validation.utils.hasValidators(observableToValidate)) {
+        ko.validation.utils.runValidations(observableToValidate);
       }
     });
   }
@@ -149,22 +145,30 @@ ko.validation = (function () {
 
   function updateValidationMessage(element, observable) {
     ko.bindingHandlers.visible.update(element, function () {
-      return observable.validationState() !== self.validationStates.PRISTINE;
+      return observable.validationState() !== ko.validation.validationStates.PRISTINE;
     });
     ko.bindingHandlers.css.update(element, function () {
       return {
-        'validation-error': observable.validationState() === self.validationStates.INVALID,
-        'validation-fixed': observable.validationState() === self.validationStates.FIXED
+        'validation-error': observable.validationState() === ko.validation.validationStates.INVALID,
+        'validation-fixed': observable.validationState() === ko.validation.validationStates.FIXED
       };
     });
     ko.bindingHandlers.text.update(element, observable.validationMessage);
   }
 
+  ko.extenders['validatesAfter'] = function (observable, param) {
+    ko.utils.arrayForEach(param, function (dependencyObservable) {
+      dependencyObservable.__validates__ = dependencyObservable.__validates__ || [];
+      dependencyObservable.__validates__.push(observable);
+    });
+    return observable;
+  };
+
   ko.bindingHandlers['validationMessage'] = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
       var observable = valueAccessor();
 
-      if (!self.utils.hasValidators(observable)) {
+      if (!ko.validation.utils.hasValidators(observable)) {
         throw new Error("'validationMessage' should be used with an observable that has validation");
       }
 
@@ -186,11 +190,11 @@ ko.validation = (function () {
       var originalReturn = originalInit(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext);
 
       if (ko.isObservable(observable)) {
-        if (self.utils.hasValidators(observable)) {
+        if (ko.validation.utils.hasValidators(observable)) {
           initValidationFor(element, observable);
         }
 
-        if (self.utils.validatesOtherObservable(observable)) {
+        if (ko.validation.utils.validatesOtherObservable(observable)) {
           ko.utils.arrayForEach(observable.__validates__, function (dependentObservable) {
             initValidationFor(element, dependentObservable);
           });
@@ -205,6 +209,4 @@ ko.validation = (function () {
 
   makeHandlerValidatable('value');
   makeHandlerValidatable('checked');
-
-  return self;
 }) ();
