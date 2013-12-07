@@ -5,6 +5,48 @@ describe('ko.validation.utilities', function () {
     utilities = ko.validators.utilities;
   });
 
+  describe('isArray', function () {
+    it('returns true for standard arrays', function () {
+      expect(utilities.isArray([])).toBe(true);
+    });
+
+    it('returns true for objects with a numeric length property', function () {
+      var object;
+      object = {
+        '0': 'value',
+        'length': 1
+      };
+
+      expect(utilities.isArray(object)).toBe(true);
+    });
+
+    it('returns false for null', function () {
+      expect(utilities.isArray(null)).toBe(false);
+    });
+
+    it('returns false for undefined', function () {
+      expect(utilities.isArray(undefined)).toBe(false);
+    });
+
+    it('returns false for objects without a "length" property', function () {
+      var object;
+      object = {
+        '0': 'value'
+      };
+
+      expect(utilities.isArray(object)).toBe(false);
+    });
+
+    it('returns false for objects with a non numeric "length" property', function () {
+      var object;
+      object = {
+        'length': 'hi!'
+      };
+
+      expect(utilities.isArray(object)).toBe(false);
+    });
+  });
+
   describe('isInteger', function () {
     it('is true for integer values', function () {
       expect(utilities.isInteger(10)).toBe(true);

@@ -15,6 +15,13 @@ ko.validators.utilities = (function () {
     return values.length ? values : null;
   }
 
+  self.isArray = function (value) {
+    if (!value) {
+      return false;
+    }
+    return Array.isArray(value) || (typeof(value) === 'object' && typeof(value.length) === 'number');
+  };
+
   self.isInteger = function (num) {
     return !self.isEmptyString(num) && isFinite(num) && num % 1 == 0;
   };
