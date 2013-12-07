@@ -1,7 +1,7 @@
 ko.validators.greaterThanOrEqualToFieldValueValidator = function (fieldName, otherFieldName, otherFieldId) {
   return {
     validate: function (value) {
-      var utils = ko.validation.utilities;
+      var utils = ko.validators.utilities;
 
       var otherField = document.getElementById(otherFieldId);
       var otherFieldValue = utils.getValue(otherField);

@@ -2,7 +2,7 @@ describe('ko.validation.utilities', function () {
   var utilities;
 
   beforeEach(function () {
-    utilities = ko.validation.utilities;
+    utilities = ko.validators.utilities;
   });
 
   describe('isInteger', function () {

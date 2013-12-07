@@ -6,7 +6,7 @@ ko.validators.rangeValidator = function (fieldName, min, max, customMessage) {
   return {
     validate: function (value) {
       var numericValue = parseInt(value, 10);
-      var isInteger = ko.validation.utilities.isInteger(value);
+      var isInteger = ko.validators.utilities.isInteger(value);
       var isWithinRange = numericValue >= min && numericValue <= max;
 
       var result = {};

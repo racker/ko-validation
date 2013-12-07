@@ -1,4 +1,4 @@
-ko.validation.utilities = (function () {
+ko.validators.utilities = (function () {
   var self = {};
 
   function getSelectSingleValue(element) {
