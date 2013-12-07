@@ -1,24 +1,12 @@
 describe('View Model with validatable observables', function () {
-  var viewModel, RequiredValidator;
-
-  RequiredValidator = function (message) {
-    this.message = message;
-  };
-
-  RequiredValidator.prototype.validate = function (value) {
-    var message = this.message;
-    return {
-      isValid: function () { return !!value; },
-      getMessage: function () { return message; }
-    };
-  };
+  var viewModel;
 
   beforeEach(function () {
-    ko.validation.registerValidator('required', RequiredValidator);
+    ko.validation.registerValidator('required', ko.validators.requiredValidator);
 
     viewModel = {
-      'name': ko.observable().extend({ 'required': ['Name is required'] }),
-      'age': ko.observable().extend({ 'required': ['Age is required'] })
+      'name': ko.observable().extend({ 'required': ['Name'] }),
+      'age': ko.observable().extend({ 'required': ['Age'] })
     };
 
     setFixtures(
@@ -38,9 +26,9 @@ describe('View Model with validatable observables', function () {
     viewModel.validate();
 
     expect(viewModel.name.isValid()).toBe(false);
-    expect(viewModel.name.validationMessage()).toBe('Name is required');
+    expect(viewModel.name.validationMessage()).toBe('Name is required.');
 
     expect(viewModel.age.isValid()).toBe(false);
-    expect(viewModel.age.validationMessage()).toBe('Age is required');
+    expect(viewModel.age.validationMessage()).toBe('Age is required.');
   });
 });

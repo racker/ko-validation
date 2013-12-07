@@ -19,15 +19,12 @@ ko.validation.utils = (function () {
   };
 
   self.createValidator = function (name, params) {
-    var validatorClass = ko.validation.registeredValidators[name];
-    if (typeof(validatorClass) !== 'function') {
-      throw 'Cannot create validator. Invalid validator class: ' + validatorClass;
+    var validatorFactory = ko.validation.registeredValidators[name];
+    if (typeof(validatorFactory) !== 'function') {
+      throw 'Cannot create validator. Invalid validator class: ' + validatorFactory;
     }
-    function F() {
-      return validatorClass.apply(this, params)
-    }
-    F.prototype = validatorClass.prototype;
-    return new F();
+
+    return validatorFactory.apply(this, params);
   };
 
   self.runValidations = function (observable) {
@@ -37,8 +34,8 @@ ko.validation.utils = (function () {
       for (i = 0; i < observable.__validators__.length; i++) {
         validator = observable.__validators__[i];
         validationResult = validator.validate(observable());
-        if (!validationResult.isValid()) {
-          observable.validationMessage(validationResult.getMessage());
+        if (!validationResult.isValid) {
+          observable.validationMessage(validationResult.message);
           observable.validationState(ko.validation.validationStates.INVALID);
           return;
         }
@@ -58,8 +55,8 @@ ko.validation.utils = (function () {
   return self;
 }) ();
 
-ko.validation.registerValidator = function (name, validatorClass) {
-  ko.validation.registeredValidators[name] = validatorClass;
+ko.validation.registerValidator = function (name, validatorFactory) {
+  ko.validation.registeredValidators[name] = validatorFactory;
   ko.extenders[name] = function (observable, param) {
     var isFirstValidatorForObservable = !observable.__validators__;
 
