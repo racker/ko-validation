@@ -1,12 +1,12 @@
 ko.validators.greaterThanOrEqualToFieldValueValidator = function (fieldName, otherFieldName, otherFieldId) {
   return {
     validate: function (value) {
-      var otherField = document.getElementById(otherFieldId);
-      var otherFieldValue = otherField.value;
-      var otherFieldIsInteger = ko.validation.utilities.isInteger(otherFieldValue);
-      var otherFieldIsEmpty = ko.validation.utilities.isEmptyString(otherFieldValue);
+      var utils = ko.validation.utilities;
 
-      if (otherFieldIsEmpty || !otherFieldIsInteger) {
+      var otherField = document.getElementById(otherFieldId);
+      var otherFieldValue = utils.getValue(otherField);
+
+      if (!utils.isInteger(otherFieldValue)) {
         return { isValid: true, message: '' };
       }
 
@@ -14,7 +14,7 @@ ko.validators.greaterThanOrEqualToFieldValueValidator = function (fieldName, oth
       var otherFieldValueNumeric = parseInt(otherFieldValue, 10);
 
       var result = {};
-      result.isValid = ko.validation.utilities.isInteger(value) && valueNumeric >= otherFieldValueNumeric;
+      result.isValid = utils.isInteger(value) && valueNumeric >= otherFieldValueNumeric;
       result.message = result.isValid ? '' : ko.validation.config.i18n(
         '{$field} must be greater than or equal to {$otherField}',
         { 'field': fieldName, 'otherField': otherFieldName }

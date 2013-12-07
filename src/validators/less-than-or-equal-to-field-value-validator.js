@@ -1,12 +1,12 @@
 ko.validators.lessThanOrEqualToFieldValueValidator = function (fieldName, otherFieldName, otherFieldId) {
   return {
     validate: function (value) {
+      var utils = ko.validation.utilities;
+
       var otherField = document.getElementById(otherFieldId);
       var otherFieldValue = otherField.value;
-      var otherFieldIsInteger = ko.validation.utilities.isInteger(otherFieldValue);
-      var otherFieldIsEmpty = ko.validation.utilities.isEmptyString(otherFieldValue);
 
-      if (otherFieldIsEmpty || !otherFieldIsInteger) {
+      if (!utils.isInteger(otherFieldValue)) {
         return { isValid: true, message: '' };
       }
 
@@ -14,7 +14,7 @@ ko.validators.lessThanOrEqualToFieldValueValidator = function (fieldName, otherF
       var otherFieldValueNumeric = parseInt(otherFieldValue, 10);
 
       var result = {};
-      result.isValid = ko.validation.utilities.isInteger(value) && valueNumeric <= otherFieldValueNumeric;
+      result.isValid = utils.isInteger(value) && valueNumeric <= otherFieldValueNumeric;
       result.message = result.isValid ? '' : ko.validation.config.i18n(
         '{$field} must be less than or equal to {$otherField}',
         { 'field': fieldName, 'otherField': otherFieldName }
