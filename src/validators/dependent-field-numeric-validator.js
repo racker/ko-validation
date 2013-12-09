@@ -1,4 +1,4 @@
-ko.validators.dependentFieldNumericValidator = function (otherFieldId, message, callback) {
+ko.validators.dependentFieldNumericValidator = function (otherFieldId, message, comparator) {
   return {
     validate: function (value) {
       var utils, otherField, otherFieldValue, valueNumeric, otherFieldValueNumeric, result;
@@ -16,7 +16,7 @@ ko.validators.dependentFieldNumericValidator = function (otherFieldId, message, 
       otherFieldValueNumeric = parseInt(otherFieldValue, 10);
 
       result = {};
-      result.isValid = utils.isInteger(valueNumeric) && callback(valueNumeric, otherFieldValueNumeric);
+      result.isValid = utils.isInteger(valueNumeric) && comparator(valueNumeric, otherFieldValueNumeric);
       result.message = message;
 
       return result;
