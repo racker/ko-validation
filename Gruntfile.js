@@ -28,18 +28,19 @@ module.exports = function(grunt) {
           'src/ko-validation.js',
           'src/validators-registry.js'
         ],
-        dest: 'dist/ko-validation.js'
+        dest: 'dist/ko-validation-<%= pkg.version %>.js'
       }
     },
     uglify: {
       options: {
         mangle: {
           except: ['ko']
-        }
+        },
+        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       dist: {
         files: {
-          'dist/ko-validation.min.js': [ 'dist/ko-validation.js' ]
+          'dist/ko-validation-<%= pkg.version %>.min.js': [ 'dist/ko-validation.js' ]
         }
       }
     },
