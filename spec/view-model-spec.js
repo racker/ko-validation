@@ -2,8 +2,6 @@ describe('View Model with validatable observables', function () {
   var viewModel;
 
   beforeEach(function () {
-    ko.validation.registerValidator('required', ko.validators.requiredValidator);
-
     viewModel = {
       'name': ko.observable().extend({ 'required': ['Name'] }),
       'age': ko.observable().extend({ 'required': ['Age'] })

@@ -2,8 +2,6 @@ describe('Validation message element', function () {
   var viewModel;
 
   beforeEach(function () {
-    ko.validation.registerValidator('required', ko.validators.requiredValidator);
-
     viewModel = {
       firstName: ko.observable('').extend({ 'required': ['First Name'] })
     };

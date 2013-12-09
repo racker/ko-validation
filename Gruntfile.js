@@ -22,7 +22,12 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['src/**/*.js'],
+        src: [
+          'src/namespaces.js',
+          'src/validators/**/*.js',
+          'src/ko-validation.js',
+          'src/validators-registry.js'
+        ],
         dest: 'dist/ko-validation.js'
       }
     },

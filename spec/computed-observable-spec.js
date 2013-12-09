@@ -2,8 +2,6 @@ describe('Computed observable validation', function () {
   var viewModel;
 
   beforeEach(function () {
-    ko.validation.registerValidator('required', ko.validators.requiredValidator);
-
     viewModel = {};
     viewModel.firstName = ko.observable('');
     viewModel.lastName = ko.observable('');

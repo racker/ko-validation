@@ -6,6 +6,7 @@ describe('observables validation', function () {
 
     validator = {};
     validatorType = jasmine.createSpy('validator').andReturn(validator);
+
     ko.validation.registerValidator('validator-type', validatorType);
 
     observable = ko.observable().extend({ 'validator-type': ['Value is required!'] });
@@ -17,8 +18,6 @@ describe('observables validation', function () {
     var observable, viewModel;
 
     beforeEach(function () {
-      ko.validation.registerValidator('required', ko.validators.requiredValidator);
-
       observable = ko.observable().extend({ required: ['Value'] });
       viewModel = { obs: observable };
 
