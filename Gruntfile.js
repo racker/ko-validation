@@ -35,7 +35,8 @@ module.exports = function(grunt) {
       options: {
         mangle: {
           except: ['ko']
-        }
+        },
+        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       dist: {
         files: {
