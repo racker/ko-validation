@@ -1,23 +1,11 @@
 describe('Validation message element', function () {
-  var viewModel, RequiredValidator;
-
-  RequiredValidator = function (message) {
-    this.message = message;
-  };
-
-  RequiredValidator.prototype.validate = function (value) {
-    var message = this.message;
-    return {
-      isValid: function () { return !!value; },
-      getMessage: function () { return message; }
-    };
-  };
+  var viewModel;
 
   beforeEach(function () {
-    ko.validation.registerValidator('required', RequiredValidator);
+    ko.validation.registerValidator('required', ko.validators.requiredValidator);
 
     viewModel = {
-      firstName: ko.observable('').extend({ 'required': ['First Name is required'] })
+      firstName: ko.observable('').extend({ 'required': ['First Name'] })
     };
   });
 
@@ -38,7 +26,7 @@ describe('Validation message element', function () {
       $('#firstName').val('').trigger('change');
 
       validationElement = $($('#parent').children()[1]);
-      expect(validationElement.text()).toBe('First Name is required');
+      expect(validationElement.text()).toBe('First Name is required.');
       expect(validationElement).toHaveClass('validation-message');
       expect(validationElement).toHaveClass('validation-error');
     });
@@ -77,7 +65,7 @@ describe('Validation message element', function () {
     it('shows the validation message in the specified validation message element', function () {
       $('#firstName').val('').trigger('change');
 
-      expect(messageElement.text()).toBe('First Name is required');
+      expect(messageElement.text()).toBe('First Name is required.');
       expect(messageElement).toHaveClass('validation-message');
       expect(messageElement).toHaveClass('validation-error');
     });

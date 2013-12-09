@@ -1,17 +1,5 @@
-describe('ko-validation', function () {
-  var validator, RequiredValidator;
-
-  RequiredValidator = function (message) {
-    this.message = message;
-  };
-
-  RequiredValidator.prototype.validate = function (value) {
-    var message = this.message;
-    return {
-      isValid: function () { return !!value; },
-      getMessage: function () { return message; }
-    };
-  };
+describe('observables validation', function () {
+  var validator;
 
   it('allows registering validators', function () {
     var validatorType, validator, observable;
@@ -29,9 +17,9 @@ describe('ko-validation', function () {
     var observable, viewModel;
 
     beforeEach(function () {
-      ko.validation.registerValidator('required', RequiredValidator);
+      ko.validation.registerValidator('required', ko.validators.requiredValidator);
 
-      observable = ko.observable().extend({ required: ['Value is required'] });
+      observable = ko.observable().extend({ required: ['Value'] });
       viewModel = { obs: observable };
 
       setFixtures('<div id="parent"><input id="input" data-bind="value: obs"/></div>');
@@ -51,7 +39,7 @@ describe('ko-validation', function () {
 
         expect(observable.validationState()).toBe(ko.validation.validationStates.INVALID);
         expect(observable.isValid()).toBe(false);
-        expect(observable.validationMessage()).toBe('Value is required');
+        expect(observable.validationMessage()).toBe('Value is required.');
       });
 
       it('is valid', function () {
@@ -77,7 +65,7 @@ describe('ko-validation', function () {
 
         expect(observable.validationState()).toBe(ko.validation.validationStates.INVALID);
         expect(observable.isValid()).toBe(false);
-        expect(observable.validationMessage()).toBe('Value is required');
+        expect(observable.validationMessage()).toBe('Value is required.');
       });
 
       it('goes to fixed after being invalid', function () {
@@ -91,31 +79,28 @@ describe('ko-validation', function () {
     });
 
     describe('when the input has multiple validators', function () {
-      var GreaterThanValidator;
+      var greaterThanValidator;
 
-      GreaterThanValidator = function (greaterThanValue, message) {
-        this.message = message;
-        this.greaterThanValue = greaterThanValue;
-      };
-
-      GreaterThanValidator.prototype.validate = function (value) {
-        var message = this.message;
-        var greaterThanValue = this.greaterThanValue;
+      greaterThanValidator = function (greaterThanValue, message) {
         return {
-          isValid: function () { return value > greaterThanValue; },
-          getMessage: function () { return message; }
+          validate: function (value) {
+            return {
+              isValid: value > greaterThanValue,
+              message: message
+            }
+          }
         };
       };
 
       beforeEach(function () {
-        ko.validation.registerValidator('greaterThan', GreaterThanValidator);
+        ko.validation.registerValidator('greaterThan', greaterThanValidator);
         observable.extend({ 'greaterThan': [10, 'Must be greater than 10'] });
       });
 
       it('sets the validation message for the first validator that fails', function () {
         $('#input').val('').trigger('change');
         expect(observable.isValid()).toBe(false);
-        expect(observable.validationMessage()).toBe('Value is required');
+        expect(observable.validationMessage()).toBe('Value is required.');
       });
 
       it('sets the validation of the second validator when the first one is valid', function () {

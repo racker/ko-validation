@@ -1,20 +1,8 @@
 describe('Computed observable validation', function () {
-  var viewModel, RequiredValidator;
-
-  RequiredValidator = function (message) {
-    this.message = message;
-  };
-
-  RequiredValidator.prototype.validate = function (value) {
-    var message = this.message;
-    return {
-      isValid: function () { return !!value; },
-      getMessage: function () { return message; }
-    };
-  };
+  var viewModel;
 
   beforeEach(function () {
-    ko.validation.registerValidator('required', RequiredValidator);
+    ko.validation.registerValidator('required', ko.validators.requiredValidator);
 
     viewModel = {};
     viewModel.firstName = ko.observable('');
@@ -26,7 +14,7 @@ describe('Computed observable validation', function () {
       return '';
     }).extend({
       'validatesAfter': [viewModel.firstName, viewModel.lastName],
-      'required': ['Full Name is required']
+      'required': ['Full Name']
     });
 
     setFixtures(
@@ -44,7 +32,7 @@ describe('Computed observable validation', function () {
 
     expect(viewModel.fullName()).toBe('');
     expect(viewModel.fullName.isValid()).toBe(false);
-    expect(viewModel.fullName.validationMessage()).toBe('Full Name is required');
+    expect(viewModel.fullName.validationMessage()).toBe('Full Name is required.');
   });
 
   it('succeeds if the computed value is valid after one of its dependencies change', function () {
