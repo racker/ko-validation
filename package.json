@@ -2,8 +2,9 @@
   "name": "ko-validation",
   "version": "0.0.1",
   "description": "Knockout Validation Plugin for the Rackspace Control Panel",
-  "main": "index.js",
+  "main": "dist/ko-validation.js",
   "scripts": {
+    "build": "grunt dist",
     "test": "grunt karma:ci"
   },
   "repository": {
