@@ -15,7 +15,7 @@ ko.validators.rangeValidator = function (fieldName, min, max, customMessage) {
 
       result = {};
       result.isValid = isInteger && isWithinRange;
-      result.message = result.isValid ? '' : customMessage || ko.validation.config.i18n(
+      result.message = result.isValid ? '' : customMessage || ko.validators.utilities.buildString(
         message, {'field': fieldName, 'min': min, 'max': max}
       );
 

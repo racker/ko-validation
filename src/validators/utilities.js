@@ -47,5 +47,21 @@ ko.validators.utilities = (function () {
     }
   };
 
+  self.objectForEach = function (object, callback) {
+    for (var key in object) {
+      if (object.hasOwnProperty(key)) {
+        callback(object[key], key);
+      }
+    }
+  };
+
+  self.buildString = function (string, args) {
+    self.objectForEach(args, function (argument, argumentName) {
+      var regex = new RegExp('\\{\\$' + argumentName + '\\}', 'g');
+      string = string.replace(regex, argument);
+    });
+    return string;
+  }
+
   return self;
 }) ();

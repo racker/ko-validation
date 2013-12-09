@@ -17,7 +17,7 @@ ko.validators.greaterThanOrEqualToFieldValueValidator = function (fieldName, oth
 
       result = {};
       result.isValid = utils.isInteger(value) && valueNumeric >= otherFieldValueNumeric;
-      result.message = result.isValid ? '' : ko.validation.config.i18n(
+      result.message = result.isValid ? '' : utils.buildString(
         '{$field} must be greater than or equal to {$otherField}',
         { 'field': fieldName, 'otherField': otherFieldName }
       );

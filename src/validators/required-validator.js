@@ -10,7 +10,7 @@ ko.validators.requiredValidator = function (fieldName, customMessage) {
         result.isValid = !!value;
       }
 
-      result.message = result.isValid ? '' : customMessage || ko.validation.config.i18n(
+      result.message = result.isValid ? '' : customMessage || ko.validators.utilities.buildString(
         '{$fieldName} is required.',
         {'fieldName': fieldName}
       );
