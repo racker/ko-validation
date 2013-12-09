@@ -40,7 +40,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/ko-validation-<%= pkg.version %>.min.js': [ 'dist/ko-validation.js' ]
+          'dist/ko-validation-<%= pkg.version %>.min.js': [ 'dist/ko-validation-<%= pkg.version %>.js' ]
         }
       }
     },
