@@ -1,6 +1,6 @@
 {
   "name": "ko-validation",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Knockout Validation Plugin for the Rackspace Control Panel",
   "main": "dist/ko-validation.js",
   "scripts": {
