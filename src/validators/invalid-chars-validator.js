@@ -1,8 +1,9 @@
 ko.validators.invalidCharsValidator = function (fieldName, invalidChars, customMessage) {
   return {
     validate: function (value) {
-      var result = {};
-      var valueAsString = value.toString();
+      var valueAsString, result;
+
+      valueAsString = value.toString();
 
       isValid = true;
       ko.utils.arrayForEach(invalidChars, function (character) {
@@ -11,6 +12,7 @@ ko.validators.invalidCharsValidator = function (fieldName, invalidChars, customM
         }
       });
 
+      result = {};
       result.isValid = isValid;
       result.message = result.isValid ? '' : customMessage || ko.validation.config.i18n(
        '{$field} cannot contain any of the characters: {$chars}.',
