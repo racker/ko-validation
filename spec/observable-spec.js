@@ -14,6 +14,18 @@ describe('observables validation', function () {
     expect(observable.__validators__).toContain(validator);
   });
 
+  it('can be validated calling "validate"', function () {
+    var observable;
+
+    observable = ko.observable().extend({ 'required': ['Required Field'] });
+
+    observable.validate();
+
+    expect(observable.isValid()).toBe(false);
+    expect(observable.validationMessage()).toBe('Required Field is required.');
+    expect(observable.validationState()).toBe(ko.validation.validationStates.INVALID);
+  });
+
   describe('validating an input', function () {
     var observable, viewModel;
 
