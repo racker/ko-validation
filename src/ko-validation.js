@@ -44,9 +44,9 @@ ko.validation.utils = (function () {
       currentState = observable.validationState();
       if (currentState !== ko.validation.validationStates.VALID) {
         observable.validationMessage('');
-        observable.validationState(currentState === ko.validation.validationStates.PRISTINE ?
-          ko.validation.validationStates.VALID :
-          ko.validation.validationStates.FIXED
+        observable.validationState(currentState === ko.validation.validationStates.INVALID ?
+          ko.validation.validationStates.FIXED :
+          ko.validation.validationStates.VALID
         );
       }
     }
