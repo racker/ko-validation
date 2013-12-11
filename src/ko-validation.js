@@ -64,6 +64,9 @@ ko.validation.registerValidator = function (name, validatorFactory) {
       observable.__validators__ = [];
       observable.validationState = ko.observable(ko.validation.validationStates.PRISTINE);
       observable.validationMessage = ko.observable('');
+      observable.validate = function () {
+        ko.validation.utils.runValidations(observable);
+      };
       observable.isValid = ko.computed(function () {
         return observable.validationState() !== ko.validation.validationStates.INVALID;
       });
