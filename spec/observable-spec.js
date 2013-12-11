@@ -75,6 +75,16 @@ describe('observables validation', function () {
         expect(observable.isValid()).toBe(true);
         expect(observable.validationMessage()).toBe('');
       });
+
+      it('stays fixed when it is changed after being fixed', function () {
+        $('#input').val('').trigger('change');
+        $('#input').val('value1').trigger('change');
+        $('#input').val('value2').trigger('change');
+
+        expect(observable.validationState()).toBe(ko.validation.validationStates.FIXED);
+        expect(observable.isValid()).toBe(true);
+        expect(observable.validationMessage()).toBe('');
+      });
     });
 
     describe('when the input has multiple validators', function () {
