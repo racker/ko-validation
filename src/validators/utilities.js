@@ -26,6 +26,10 @@ ko.validators.utilities = (function () {
     return typeof value == 'boolean';
   };
 
+  self.isString = function (value) {
+    return typeof value == 'string';
+  };
+
   self.isInteger = function (num) {
     return !self.isEmptyString(num) && isFinite(num) && num % 1 == 0;
   };

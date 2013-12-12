@@ -30,7 +30,7 @@ describe('ko.validators.customValidator', function () {
     });
   });
 
-  describe('when validation returns a boolean', function () {
+  describe('when validation returns a simplified result', function () {
     var validator, validationSpy;
 
     beforeEach(function () {
@@ -38,16 +38,22 @@ describe('ko.validators.customValidator', function () {
       validator = ko.validators.customValidator(validation);
     });
 
-    it('is valid if `true`', function () {
+    it('is valid if result is `true`', function () {
       validation.andReturn(true);
 
       expect(validator.validate()).toEqual({ isValid: true });
     });
 
-    it('is not valid if `false`', function () {
+    it('is not valid if result is `false`', function () {
       validation.andReturn(false);
 
       expect(validator.validate()).toEqual({ isValid: false });
+    });
+
+    it('is not valid if result is a string', function () {
+      validation.andReturn('nope, sorry.');
+
+      expect(validator.validate()).toEqual({ isValid: false, message: 'nope, sorry.' });
     });
   });
 });
