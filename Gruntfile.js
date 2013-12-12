@@ -15,6 +15,10 @@ module.exports = function(grunt) {
       ci: {
         singleRun: true,
         browsers: ['PhantomJS']
+      },
+      dev: {
+        background: false,
+        browsers: ['Chrome']
       }
     },
     concat: {
