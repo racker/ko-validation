@@ -1,7 +1,7 @@
-ko.validators.customValidator = function (validationFn) {
+ko.validators.customValidator = function (validationFn, context) {
   return {
     validate: function (value) {
-      return validationFn(value);
+      return validationFn.call(context, value);
     }
   };
 };

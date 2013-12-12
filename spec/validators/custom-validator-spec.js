@@ -1,12 +1,15 @@
 describe('ko.validators.customValidator', function () {
-  it('passes the value to the validation function', function() {
+  it('passes the value and context to the validation function', function() {
     var validator, validation, result;
 
     validation = jasmine.createSpy('valicationFunction');
-    validator = ko.validators.customValidator(validation);
+    context = { id: 'le_context' };
 
+    validator = ko.validators.customValidator(validation, context);
     result = validator.validate('some value');
+
     expect(validation).toHaveBeenCalledWith('some value');
+    expect(validation.mostRecentCall.object).toBe(context);
   });
 
   it('returns the result of the validation function', function() {
