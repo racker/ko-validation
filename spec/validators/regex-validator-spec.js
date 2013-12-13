@@ -1,19 +1,26 @@
 describe('ko.validators.regexValidator', function () {
-  var validator;
+  it('is invalid if value does not match regex', function () {
+    var validator = ko.validators.regexValidator(/^valid$/);
 
-  beforeEach(function() {
-    validator = ko.validators.regexValidator('field_name', /^valid$/, 'does not match /^valid$/');
+    expect(validator.validate('valid').isValid).toBe(true);
   });
 
   it('is invalid if value does not match regex', function () {
+    var validator = ko.validators.regexValidator(/^valid$/, 'field_name');
+
     expect(validator.validate('invalid')).toEqual({
       isValid: false,
       message: 'field_name does not match /^valid$/.'
     });
   });
 
-  it('is invalid if value does not match regex', function () {
-    expect(validator.validate('valid').isValid).toBe(true);
+  it('is invalid with special message if value does not match regex', function () {
+    var validator = ko.validators.regexValidator(/[0-9]+/, 'field_name', 'does not have a digit');
+
+    expect(validator.validate('not a digit')).toEqual({
+      isValid: false,
+      message: 'field_name does not have a digit.'
+    });
   });
 });
 
