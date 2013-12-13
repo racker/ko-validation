@@ -35,7 +35,7 @@ ko.validation.utils = (function () {
         validator = observable.__validators__[i];
         validationResult = validator.validate(observable());
         if (!validationResult.isValid) {
-          observable.validationMessage(validationResult.message);
+          observable.validationMessage(validationResult.message || '');
           observable.validationState(ko.validation.validationStates.INVALID);
           return;
         }

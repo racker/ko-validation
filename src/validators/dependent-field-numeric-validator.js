@@ -1,9 +1,9 @@
 ko.validators.dependentFieldNumericValidator = function (otherFieldId, message, comparator) {
+  var utils = ko.validators.utilities;
+
   return {
     validate: function (value) {
-      var utils, otherField, otherFieldValue, valueNumeric, otherFieldValueNumeric, result;
-
-      utils = ko.validators.utilities;
+      var otherField, otherFieldValue, valueNumeric, otherFieldValueNumeric, result;
 
       otherField = document.getElementById(otherFieldId);
       otherFieldValue = otherField.value;
