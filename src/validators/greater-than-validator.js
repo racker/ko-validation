@@ -1,17 +1,19 @@
 ko.validators.greaterThanValueValidator = function (fieldName, minimum) {
-  return ko.validators.customValidator(function (value) {
-    var numericValue, isValid;
+  var utils = ko.validators.utilities;
 
-    numericValue = parseInt(value, 10);
-    isValid = numericValue > minimum;
+  return ko.validators.customValidator(
+    utils.validateWithMessage(function (value) {
+      var numericValue, isValid;
 
-    if (isValid) {
-      return true;
-    }
-    return ko.validators.utilities.buildString(
+      numericValue = parseInt(value, 10);
+      isValid = numericValue > minimum;
+
+      return isValid;
+    },
+    utils.buildString(
       '{$field} must be greater than {$minimum}.',
       { 'field': fieldName, 'minimum': minimum }
-    );
-  });
+    ))
+  );
 };
 
