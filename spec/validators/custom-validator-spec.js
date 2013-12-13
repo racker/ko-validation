@@ -5,7 +5,7 @@ describe('ko.validators.customValidator', function () {
     validation = jasmine.createSpy('valicationFunction');
     context = { id: 'le_context' };
 
-    validator = ko.validators.customValidator(validation, context);
+    validator = ko.validators.customValidator(validation, 'foo', context);
     result = validator.validate('some value');
 
     expect(validation).toHaveBeenCalledWith('some value');
@@ -55,5 +55,12 @@ describe('ko.validators.customValidator', function () {
 
       expect(validator.validate()).toEqual({ isValid: false, message: 'nope, sorry.' });
     });
+  });
+
+  it('uses the message if result is `false`', function () {
+    var validator;
+    validator = ko.validators.customValidator(function () { return false; }, 'nope.');
+
+    expect(validator.validate()).toEqual({ isValid: false, message: 'nope.' });
   });
 });

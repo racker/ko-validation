@@ -1,4 +1,4 @@
-ko.validators.customValidator = function (validationFn, context) {
+ko.validators.customValidator = function (validationFn, message, context) {
   var utils = ko.validators.utilities;
 
   return {
@@ -6,7 +6,7 @@ ko.validators.customValidator = function (validationFn, context) {
       var result = validationFn.call(context, value);
 
       if (utils.isBoolean(result)) {
-        return { isValid: result };
+        return { isValid: result, message: message };
       } else if (utils.isString(result)) {
         return { isValid: false, message: result };
       }
