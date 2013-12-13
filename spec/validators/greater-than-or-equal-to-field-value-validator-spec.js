@@ -34,7 +34,7 @@ describe('ko.validators.greaterThanOrEqualToFieldValueValidator', function () {
   it('should show an error message on failure', function () {
     result = validator.validate('9');
 
-    expect(result.message).toBe('FieldName must be greater than or equal to OtherFieldName');
+    expect(result.message).toBe('FieldName must be greater than or equal to OtherFieldName.');
   });
 });
 
