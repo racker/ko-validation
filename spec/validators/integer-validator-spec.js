@@ -18,20 +18,24 @@ describe('ko.validators.integerValidator', function () {
   });
 
   it('is invalid if the value is a string that contains a number', function () {
-    expect(validator.validate('10questions').isValid).toBe(false);
+    expect(validator.validate('10questions')).toEqual({
+      isValid: false,
+      message: 'field_name must be a number.'
+    });
   });
 
   it('is invalid if the value is not integer', function () {
-    expect(validator.validate('10.5').isValid).toBe(false);
+    expect(validator.validate('10.5')).toEqual({
+      isValid: false,
+      message: 'field_name must be a number.'
+    });
   });
 
   it('is invalid if value is not a number', function () {
-    result = validator.validate('string');
-    expect(result.isValid).toBe(false);
-  });
-
-  it('returns a proper message', function () {
-    expect(validator.validate('string').message).toBe('field_name must be a number.');
+    expect(validator.validate('string')).toEqual({
+      isValid: false,
+      message: 'field_name must be a number.'
+    });
   });
 });
 
