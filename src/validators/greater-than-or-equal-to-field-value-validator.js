@@ -1,7 +1,5 @@
 ko.validators.greaterThanOrEqualToFieldValueValidator = function (fieldName, otherFieldName, otherFieldId) {
-  var dependentFieldNumericValidator;
-
-  dependentFieldNumericValidator = ko.validators.dependentFieldNumericValidator(
+  return ko.validators.dependentFieldNumericValidator(
     otherFieldId,
     ko.validators.utilities.buildString(
       '{$field} must be greater than or equal to {$otherField}',
@@ -11,11 +9,5 @@ ko.validators.greaterThanOrEqualToFieldValueValidator = function (fieldName, oth
       return value >= otherFieldValue;
     }
   );
-
-  return {
-    validate: function (value) {
-      return dependentFieldNumericValidator.validate(value);
-    }
-  };
 };
 
