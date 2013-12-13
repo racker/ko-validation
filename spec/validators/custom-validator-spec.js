@@ -5,7 +5,7 @@ describe('ko.validators.customValidator', function () {
     validation = jasmine.createSpy('valicationFunction');
     context = { id: 'le_context' };
 
-    validator = ko.validators.customValidator(validation, 'foo', context);
+    validator = ko.validators.customValidator(validation, context);
     result = validator.validate('some value');
 
     expect(validation).toHaveBeenCalledWith('some value');

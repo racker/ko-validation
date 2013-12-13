@@ -1,4 +1,4 @@
-ko.validators.customValidator = function (validationFn, message, context) {
+ko.validators.customValidator = function (validationFn, context) {
   return {
     validate: function (value) {
       return validationFn.call(context, value);
