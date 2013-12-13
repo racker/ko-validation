@@ -7,8 +7,6 @@ ko.validators.customValidator = function (validationFn, message, context) {
 
       if (utils.isBoolean(result)) {
         return { isValid: result, message: message };
-      } else if (utils.isString(result)) {
-        return { isValid: false, message: result };
       }
       return result;
     }
