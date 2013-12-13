@@ -5,5 +5,9 @@
   ko.validation.registerValidator('lessThanOrEqualToFieldValue', ko.validators.lessThanOrEqualToFieldValueValidator);
   ko.validation.registerValidator('range', ko.validators.rangeValidator);
   ko.validation.registerValidator('required', ko.validators.requiredValidator);
+  ko.validation.registerValidator('custom', ko.validators.customValidator);
+  ko.validation.registerValidator('greaterThan', ko.validators.greaterThanValidator);
+  ko.validation.registerValidator('integer', ko.validators.integerValidator);
+  ko.validation.registerValidator('regex', ko.validators.regexValidator);
 }) ();
 
