@@ -29,31 +29,4 @@ describe('ko.validators.customValidator', function () {
       message: '"le_value" is invalid because of reasons.'
     });
   });
-
-  describe('when validation returns a simplified result', function () {
-    var validator, validationSpy;
-
-    beforeEach(function () {
-      validation = jasmine.createSpy();
-      validator = ko.validators.customValidator(validation);
-    });
-
-    it('is valid if result is `true`', function () {
-      validation.andReturn(true);
-
-      expect(validator.validate()).toEqual({ isValid: true });
-    });
-
-    it('is not valid if result is `false`', function () {
-      validation.andReturn(false);
-
-      expect(validator.validate()).toEqual({ isValid: false });
-    });
-
-    it('is not valid if result is a string', function () {
-      validation.andReturn('nope, sorry.');
-
-      expect(validator.validate()).toEqual({ isValid: false, message: 'nope, sorry.' });
-    });
-  });
 });

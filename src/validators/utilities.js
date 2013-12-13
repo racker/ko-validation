@@ -69,7 +69,14 @@ ko.validators.utilities = (function () {
       string = string.replace(regex, argument);
     });
     return string;
-  }
+  };
+
+  self.validateWithMessage = function (isValueValidFn, message) {
+     return function (value) {
+       var isValid = !!isValueValidFn(value);
+       return { isValid: isValid, message: isValid ? undefined : message }
+     };
+  };
 
   return self;
 }) ();
