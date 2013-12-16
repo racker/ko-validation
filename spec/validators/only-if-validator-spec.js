@@ -5,7 +5,7 @@ describe('ko.validators.onlyIfValidator', function () {
     };
   }
 
-  it('is valid if requisite is not met', function () {
+  it('is valid if requirement is not met', function () {
     var validator = ko.validators.onlyIfValidator(
       constant(false),
       ko.validators.requiredValidator()
@@ -14,7 +14,7 @@ describe('ko.validators.onlyIfValidator', function () {
     expect(validator.validate('whatever')).toEqual({ isValid: true });
   });
 
-  it('runs other validator if requisite is met', function () {
+  it('runs other validator if requirement is met', function () {
     var validator = ko.validators.onlyIfValidator(
       constant(true),
       {

@@ -1,4 +1,4 @@
-ko.validators.onlyIfValidator = function (requisite, actualValidator) {
+ko.validators.onlyIfValidator = function (requirement, actualValidator) {
   var utils = ko.validators.utilities;
 
   if (!utils.isFunction(actualValidator.validate)) {
@@ -12,7 +12,7 @@ ko.validators.onlyIfValidator = function (requisite, actualValidator) {
 
   return {
     validate: function (value) {
-      if (!requisite()) {
+      if (!requirement()) {
         return ko.validators.results.valid();
       }
       return actualValidator.validate(value);
