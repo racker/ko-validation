@@ -1,8 +1,13 @@
-ko.validators.onlyIfValidator = function (requisite) {
+ko.validators.onlyIfValidator = function (requisite, actualValidator) {
   var utils = ko.validators.utilities;
 
-  return ko.validators.customValidator(function () {
-    return { isValid: true };
-  });
+  return {
+    validate: function (value) {
+      if (!requisite()) {
+        return ko.validators.results.valid();
+      }
+      return actualValidator.validate(value);
+    }
+  };
 };
 
