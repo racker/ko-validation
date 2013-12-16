@@ -9,5 +9,6 @@
   ko.validation.registerValidator('greaterThan', ko.validators.greaterThanValidator);
   ko.validation.registerValidator('integer', ko.validators.integerValidator);
   ko.validation.registerValidator('regex', ko.validators.regexValidator);
+  ko.validation.registerValidator('onlyIf', ko.validators.onlyIfValidator);
 }) ();
 
