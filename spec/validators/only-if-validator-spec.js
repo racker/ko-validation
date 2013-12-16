@@ -35,13 +35,13 @@ describe('ko.validators.onlyIfValidator', function () {
     var validator = ko.validators.onlyIfValidator(
       constant(true),
       {
-        'required': ['field_name', 'Required validator does not like your value.']
+        'required': ['field_name', 'In these particular condition, this field is required.']
       }
     );
 
     expect(validator.validate('')).toEqual({
       isValid: false,
-      message: 'Required validator does not like your value.'
+      message: 'In these particular condition, this field is required.'
     });
   });
 });
