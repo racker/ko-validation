@@ -38,6 +38,10 @@ ko.validators.utilities = (function () {
     return /^[\s\xa0]*$/.test(value == null ? '' : String(value));
   };
 
+  self.isFunction = function (value) {
+    return typeof value == 'function' && Object.prototype.toString.call(value) == '[object Function]';
+  };
+
   self.getValue = function (element) {
     var type = element.type;
     if (!type || !type.toLowerCase) { return null; }

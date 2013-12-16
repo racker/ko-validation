@@ -6,7 +6,10 @@ describe('ko.validators.onlyIfValidator', function () {
   }
 
   it('is valid if requisite is not met', function () {
-    var validator = ko.validators.onlyIfValidator(constant(false));
+    var validator = ko.validators.onlyIfValidator(
+      constant(false),
+      ko.validators.requiredValidator()
+    );
 
     expect(validator.validate('whatever')).toEqual({ isValid: true });
   });
@@ -25,6 +28,20 @@ describe('ko.validators.onlyIfValidator', function () {
     expect(validator.validate('something')).toEqual({
       isValid: false,
       message: 'Your value is invalid.'
+    });
+  });
+
+  it('finds other validators by its specification', function () {
+    var validator = ko.validators.onlyIfValidator(
+      constant(true),
+      {
+        'required': ['field_name', 'Required validator does not like your value.']
+      }
+    );
+
+    expect(validator.validate('')).toEqual({
+      isValid: false,
+      message: 'Required validator does not like your value.'
     });
   });
 });
