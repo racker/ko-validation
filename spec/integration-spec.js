@@ -9,6 +9,7 @@ describe('ko validation integration', function () {
       '<input id="less-than-other-field-input" data-bind="value: lessThanOtherField"/>' +
       '<input id="sometimes-required-input" data-bind="value: sometimesRequired"/>' +
       '<input id="numeric-input" data-bind="value: integerField"/>' +
+      '<input id="no-numbers-input" data-bind="value: noNumbersField"/>' +
       '</div>'
     );
 
@@ -24,6 +25,9 @@ describe('ko validation integration', function () {
       }),
       integerField: ko.observable('').extend({
         'integer': [ 'A number' ]
+      }),
+      noNumbersField: ko.observable('').extend({
+        'invalidChars': [ 'No numbers', '1234567890'.split('') ]
       }),
       isItRequired: ko.observable(true)
     };
@@ -89,6 +93,20 @@ describe('ko validation integration', function () {
       $('#greater-than-input').val('3').trigger('change');
 
       expect(viewModel.integerField).toBeValid();
+    });
+  });
+
+  describe('for invalid chars validator', function () {
+    it('is invalid', function () {
+      $('#no-numbers-input').val('n0 numbers').trigger('change');
+
+      expect(viewModel.noNumbersField).not.toBeValid();
+    });
+
+    it('is valid', function () {
+      $('#no-numbers-input').val('no numbers').trigger('change');
+
+      expect(viewModel.noNumbersField).toBeValid();
     });
   });
 
