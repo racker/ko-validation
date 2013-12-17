@@ -12,6 +12,7 @@ describe('ko validation integration', function () {
       '<input id="no-numbers-input" data-bind="value: noNumbersField"/>' +
       '<input id="short-input" data-bind="value: shortField"/>' +
       '<input id="range-input" data-bind="value: rangeField"/>' +
+      '<input id="regex-input" data-bind="value: regexField"/>' +
       '</div>'
     );
 
@@ -36,6 +37,9 @@ describe('ko validation integration', function () {
       }),
       rangeField: ko.observable('').extend({
         'range': [ 'Ranged', 10, 100 ]
+      }),
+      regexField: ko.observable('').extend({
+        'regex': [ /^[0-9]+$/, 'Regular' ]
       }),
       isItRequired: ko.observable(true)
     };
@@ -143,6 +147,20 @@ describe('ko validation integration', function () {
       $('#range-input').val('40').trigger('change');
 
       expect(viewModel.rangeField).toBeValid();
+    });
+  });
+
+  describe('for regex validator', function () {
+    it('is invalid', function () {
+      $('#regex-input').val('only numbers').trigger('change');
+
+      expect(viewModel.regexField).not.toBeValid();
+    });
+
+    it('is valid', function () {
+      $('#regex-input').val('094813').trigger('change');
+
+      expect(viewModel.regexField).toBeValid();
     });
   });
 
