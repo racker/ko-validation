@@ -11,6 +11,7 @@ describe('ko validation integration', function () {
       '<input id="numeric-input" data-bind="value: integerField"/>' +
       '<input id="no-numbers-input" data-bind="value: noNumbersField"/>' +
       '<input id="short-input" data-bind="value: shortField"/>' +
+      '<input id="range-input" data-bind="value: rangeField"/>' +
       '</div>'
     );
 
@@ -32,6 +33,9 @@ describe('ko validation integration', function () {
       }),
       shortField: ko.observable('').extend({
         'length': [ 'Short', 8 ]
+      }),
+      rangeField: ko.observable('').extend({
+        'range': [ 'Ranged', 10, 100 ]
       }),
       isItRequired: ko.observable(true)
     };
@@ -125,6 +129,20 @@ describe('ko validation integration', function () {
       $('#short-input').val('ship it').trigger('change');
 
       expect(viewModel.shortField).toBeValid();
+    });
+  });
+
+  describe('for range validator', function () {
+    it('is invalid', function () {
+      $('#range-input').val('600').trigger('change');
+
+      expect(viewModel.rangeField).not.toBeValid();
+    });
+
+    it('is valid', function () {
+      $('#range-input').val('40').trigger('change');
+
+      expect(viewModel.rangeField).toBeValid();
     });
   });
 
