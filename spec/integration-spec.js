@@ -10,6 +10,7 @@ describe('ko validation integration', function () {
       '<input id="sometimes-required-input" data-bind="value: sometimesRequired"/>' +
       '<input id="numeric-input" data-bind="value: integerField"/>' +
       '<input id="no-numbers-input" data-bind="value: noNumbersField"/>' +
+      '<input id="short-input" data-bind="value: shortField"/>' +
       '</div>'
     );
 
@@ -28,6 +29,9 @@ describe('ko validation integration', function () {
       }),
       noNumbersField: ko.observable('').extend({
         'invalidChars': [ 'No numbers', '1234567890'.split('') ]
+      }),
+      shortField: ko.observable('').extend({
+        'length': [ 'Short', 8 ]
       }),
       isItRequired: ko.observable(true)
     };
@@ -107,6 +111,20 @@ describe('ko validation integration', function () {
       $('#no-numbers-input').val('no numbers').trigger('change');
 
       expect(viewModel.noNumbersField).toBeValid();
+    });
+  });
+
+  describe('for length validator', function () {
+    it('is invalid', function () {
+      $('#short-input').val('exceedingly long value').trigger('change');
+
+      expect(viewModel.shortField).not.toBeValid();
+    });
+
+    it('is valid', function () {
+      $('#short-input').val('ship it').trigger('change');
+
+      expect(viewModel.shortField).toBeValid();
     });
   });
 

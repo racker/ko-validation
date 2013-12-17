@@ -7,17 +7,12 @@ describe('ko.validators.lengthValidator', function() {
 
   it('should pass if the length is in the limit', function() {
     result = validator.validate('foo');
-    expect(result.isValid).toBe(true);
+    expect(result).toEqual({ isValid: true });
   });
 
   it('should check the length of an integer', function() {
     result = validator.validate(123);
     expect(result.isValid).toBe(true);
-  });
-
-  it('should have empty message on valid value', function() {
-    result = validator.validate('foo');
-    expect(result.message).toBe('');
   });
 
   it('should fail if the length is not in the limit', function() {
