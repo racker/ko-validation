@@ -6,7 +6,7 @@
   ko.validation.registerValidator('range', ko.validators.rangeValidator);
   ko.validation.registerValidator('required', ko.validators.requiredValidator);
   ko.validation.registerValidator('custom', ko.validators.customValidator);
-  ko.validation.registerValidator('greaterThan', ko.validators.greaterThanValidator);
+  ko.validation.registerValidator('greaterThan', ko.validators.greaterThanValueValidator);
   ko.validation.registerValidator('integer', ko.validators.integerValidator);
   ko.validation.registerValidator('regex', ko.validators.regexValidator);
   ko.validation.registerValidator('onlyIf', ko.validators.onlyIfValidator);
