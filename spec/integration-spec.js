@@ -6,13 +6,21 @@ describe('ko validation integration', function () {
       '<div id="parent">' +
       '<input id="required-input" data-bind="value: requiredField"/>' +
       '<input id="greater-than-input" data-bind="value: greaterThanField"/>' +
+      '<input id="less-than-other-field-input" data-bind="value: lessThanOtherField"/>' +
       '<input id="sometimes-required-input" data-bind="value: sometimesRequired"/>' +
       '</div>'
     );
 
     viewModel = {
-      requiredField: ko.observable('').extend({ 'required': ['First Name'] }),
-      greaterThanField: ko.observable('').extend({ 'greaterThan': [ 'greaterThanField', 42 ] }),
+      requiredField: ko.observable('').extend({
+        'required': ['First Name']
+      }),
+      greaterThanField: ko.observable('').extend({
+        'greaterThan': [ 'Big number', 42 ]
+      }),
+      lessThanOtherField: ko.observable('').extend({
+        'lessThanOrEqualToFieldValue': [ 'Small number', 'Big number', 'greater-than-input' ]
+      }),
       isItRequired: ko.observable(true)
     };
     viewModel['sometimesRequired'] = ko.observable('').extend({
@@ -47,6 +55,22 @@ describe('ko validation integration', function () {
       $('#greater-than-input').val(43).trigger('change');
 
       expect(viewModel.greaterThanField).toBeValid();
+    });
+  });
+
+  describe('for less than or equal to other field validator', function () {
+    it('is invalid', function () {
+      $('#greater-than-input').val(99).trigger('change');
+      $('#less-than-other-field-input').val(100).trigger('change');
+
+      expect(viewModel.lessThanOtherField).not.toBeValid();
+    });
+
+    it('is valid', function () {
+      $('#greater-than-input').val(51).trigger('change');
+      $('#less-than-other-field-input').val(51).trigger('change');
+
+      expect(viewModel.lessThanOtherField).toBeValid();
     });
   });
 
