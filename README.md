@@ -34,40 +34,20 @@ By default, the plugin will insert a span in the parent element of the input tha
 
 Currently the following rules are supported:
 
-```javascript
-ko.observable().extend({ 'required': ['Field Name', 'Optional custom error message'] });
-```
-```javascript
-var invalidCharacters = ['%', '!', '$'];
-ko.observable().extend({
-  'invalidChars': ['Field Name', invalidCharacters, 'Optional custom error message']
-});
-```
-```javascript
-var maximumLength = 128;
-ko.observable().extend({ 'length': ['Field Name', maximumLength] });
-```
-```javascript
-var minimum = 1;
-var maximum = 10;
-ko.observable().extend({
-  'range': ['Field Name', minimum, maximum, 'Optional custom error message']
-});
-```
-```javascript
-// validates that the observable value is less than or equal to the value in the input field #max-count
-var anotherFieldId = 'max-count';
-ko.observable().extend({
-  'lessThanOrEqualToFieldValue': ['Minimum Count', 'Maximum Count', anotherFieldId]
-});
-```
-```javascript
-// validates that the observable value is greater than or equal to the value in the input field #min-count
-var anotherFieldId = 'min-count';
-ko.observable().extend({
-  'greaterThanOrEqualToFieldValue': ['Maximum Count', 'Minimum Count', anotherFieldId]
-});
-```
+* Greater Than `greaterThan`
+* Greater Than Or Equal To Field Value `greaterThanOrEqualToFieldValue`
+* Less Than Or Equal To Field Value `lessThanOrEqualToFieldValue`
+* Invalid Charachters `invalidChars`
+* Length `length`
+* Range `range`
+* Required `required`
+* Required Only If `onlyIf`
+* Integer `integer`
+* Regex `regex`
+* Custom `custom`
+
+
+Please refer to [integration specs for examples]('https://github.com/racker/ko-validation/blob/master/spec/integration-spec.js')
 
 ##Validating Computed Observables
 
