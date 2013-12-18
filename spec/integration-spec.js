@@ -6,6 +6,7 @@ describe('ko validation integration', function () {
       '<div id="parent">' +
       '<input id="required-input" data-bind="value: requiredField"/>' +
       '<input id="greater-than-input" data-bind="value: greaterThanField"/>' +
+      '<input id="greater-than-other-field-input" data-bind="value: greaterThanOrEqualField"/>' +
       '<input id="less-than-other-field-input" data-bind="value: lessThanOtherField"/>' +
       '<input id="sometimes-required-input" data-bind="value: sometimesRequired"/>' +
       '<input id="numeric-input" data-bind="value: integerField"/>' +
@@ -22,6 +23,9 @@ describe('ko validation integration', function () {
       }),
       greaterThanField: ko.observable('').extend({
         'greaterThan': [ 'Big number', 42 ]
+      }),
+      greaterThanOrEqualField: ko.observable('').extend({
+        'greaterThanOrEqualToFieldValue': [ 'Big number', 'Small Number', 'greater-than-input' ]
       }),
       lessThanOtherField: ko.observable('').extend({
         'lessThanOrEqualToFieldValue': [ 'Small number', 'Big number', 'greater-than-input' ]
@@ -91,6 +95,22 @@ describe('ko validation integration', function () {
       $('#less-than-other-field-input').val(51).trigger('change');
 
       expect(viewModel.lessThanOtherField).toBeValid();
+    });
+  });
+
+  describe('for greater than or equal to other field validator', function () {
+    it('is invalid', function () {
+      $('#greater-than-input').val(99).trigger('change');
+      $('#greater-than-other-field-input').val(98).trigger('change');
+
+      expect(viewModel.greaterThanOrEqualField).not.toBeValid();
+    });
+
+    it('is valid', function () {
+      $('#greater-than-input').val(99).trigger('change');
+      $('#greater-than-other-field-input').val(100).trigger('change');
+
+      expect(viewModel.greaterThanOrEqualField).toBeValid();
     });
   });
 
