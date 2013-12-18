@@ -47,7 +47,7 @@ Currently the following rules are supported:
 * Custom `custom`
 
 
-Please refer to [integration specs for examples]('https://github.com/racker/ko-validation/blob/master/spec/integration-spec.js')
+Please refer to [integration specs for examples](https://github.com/racker/ko-validation/blob/master/spec/integration-spec.js)
 
 ##Validating Computed Observables
 
