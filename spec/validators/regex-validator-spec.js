@@ -1,5 +1,5 @@
 describe('ko.validators.regexValidator', function () {
-  it('is invalid if value does not match regex', function () {
+  it('is valid if value matches regex', function () {
     var validator = ko.validators.regexValidator(/^valid$/);
 
     expect(validator.validate('valid').isValid).toBe(true);

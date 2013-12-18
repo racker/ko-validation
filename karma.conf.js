@@ -10,6 +10,7 @@ module.exports = function(config) {
       'src/validators/**/*.js',
       'src/validators-registry.js',
       'src/**/*.js',
+      'spec/matchers.js',
       'spec/**/*.js'
     ]
   });
