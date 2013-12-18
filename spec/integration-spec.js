@@ -198,23 +198,23 @@ describe('ko validation integration', function () {
   describe('for onlyIf required validator', function () {
     it('is invalid when requirement is true and value is not valid', function () {
       viewModel.isItRequired(true);
-      $('#required-input').val('').trigger('change');
+      $('#sometimes-required-input').val('').trigger('change');
 
-      expect(viewModel.requiredField).not.toBeValid();
+      expect(viewModel.sometimesRequired).not.toBeValid();
     });
 
     it('is valid', function () {
       viewModel.isItRequired(true);
-      $('#required-input').val('Jonh').trigger('change');
+      $('#sometimes-required-input').val('Jonh').trigger('change');
 
-      expect(viewModel.requiredField).toBeValid();
+      expect(viewModel.sometimesRequired).toBeValid();
     });
 
     it('is valid when requirement is not true', function () {
       viewModel.isItRequired(false);
-      $('#required-input').val('').trigger('change');
+      $('#sometimes-required-input').val('').trigger('change');
 
-      expect(viewModel.requiredField).not.toBeValid();
+      expect(viewModel.sometimesRequired).toBeValid();
     });
   });
 
