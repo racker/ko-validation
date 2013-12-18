@@ -2,6 +2,8 @@ describe('ko validation integration', function () {
   var viewModel;
 
   beforeEach(function () {
+    var customValidatorContext, customValidatorFunction;
+
     setFixtures(
       '<div id="parent">' +
       '<input id="required-input" data-bind="value: requiredField"/>' +
@@ -14,8 +16,14 @@ describe('ko validation integration', function () {
       '<input id="short-input" data-bind="value: shortField"/>' +
       '<input id="range-input" data-bind="value: rangeField"/>' +
       '<input id="regex-input" data-bind="value: regexField"/>' +
+      '<input id="custom-input" data-bind="value: customField"/>' +
       '</div>'
     );
+
+    customValidatorContext = { toTest: 'foo' };
+    customValidatorFunction = function (value) {
+      return { isValid: value === this.toTest, message: '' }
+    };
 
     viewModel = {
       requiredField: ko.observable('').extend({
@@ -44,6 +52,9 @@ describe('ko validation integration', function () {
       }),
       regexField: ko.observable('').extend({
         'regex': [ /^[0-9]+$/, 'Regular' ]
+      }),
+      customField: ko.observable('').extend({
+        'custom': [customValidatorFunction, customValidatorContext]
       }),
       isItRequired: ko.observable(true)
     };
@@ -204,6 +215,20 @@ describe('ko validation integration', function () {
       $('#required-input').val('').trigger('change');
 
       expect(viewModel.requiredField).not.toBeValid();
+    });
+  });
+
+  describe('for custom validator', function () {
+    it('is valid', function () {
+      $('#custom-input').val('foo').trigger('change');
+
+      expect(viewModel.customField).toBeValid();
+    });
+
+    it('is invalid', function () {
+      $('#custom-input').val('notFoo').trigger('change');
+
+      expect(viewModel.customField).not.toBeValid();
     });
   });
 });
