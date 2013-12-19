@@ -22,10 +22,10 @@ ko.validation.utils = (function () {
     var validatorFactory = ko.validation.registeredValidators[name];
     if (typeof(validatorFactory) !== 'function') {
       throw new Error([
-        'Cannot create validator. Invalid validator class: ',
-        validatorFactory,
-        '. Name was: ',
-        name
+        'Cannot create validator with name "',
+        name,
+        '". Validator class is ',
+        validatorFactory || 'not registered.',
       ].join(''));
     }
 
