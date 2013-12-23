@@ -12,4 +12,12 @@ describe('ko.validation.utils', function () {
     expect(validatorInstance).toEqual({ validate: 'fake_validator' });
     expect(validatorCreator).toHaveBeenCalledWith('uga', 'buga');
   });
+
+  it('throws an Error when trying to create an not-registered validator', function () {
+    expect(function () {
+      ko.validation.utils.createValidator('not_registered');
+    }).toThrow(
+      new Error('Cannot create validator with name "not_registered". Validator class is not registered.')
+    );
+  });
 });
