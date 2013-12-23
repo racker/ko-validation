@@ -21,7 +21,12 @@ ko.validation.utils = (function () {
   self.createValidator = function (name, params) {
     var validatorFactory = ko.validation.registeredValidators[name];
     if (typeof(validatorFactory) !== 'function') {
-      throw 'Cannot create validator. Invalid validator class: ' + validatorFactory;
+      throw new Error([
+        'Cannot create validator with name "',
+        name,
+        '". Validator class is ',
+        validatorFactory || 'not registered.',
+      ].join(''));
     }
 
     return validatorFactory.apply(this, params);
