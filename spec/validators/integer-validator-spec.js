@@ -17,6 +17,20 @@ describe('ko.validators.integerValidator', function () {
     expect(validator.validate('-10').isValid).toBe(true);
   });
 
+  it('is invalid if the value is "false"', function () {
+    expect(validator.validate("false")).toEqual({
+      isValid: false,
+      message: 'field_name must be a number.'
+    });
+  });
+
+  it('is invalid if the value is `false`', function () {
+    expect(validator.validate(false)).toEqual({
+      isValid: false,
+      message: 'field_name must be a number.'
+    });
+  });
+
   it('is invalid if the value is a string that contains a number', function () {
     expect(validator.validate('10questions')).toEqual({
       isValid: false,

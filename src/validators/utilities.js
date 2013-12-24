@@ -30,8 +30,12 @@ ko.validators.utilities = (function () {
     return typeof value == 'string';
   };
 
+  self.isNumber = function (num) {
+    return !self.isEmptyString(num) && isFinite(num) && (num !== false);
+  };
+
   self.isInteger = function (num) {
-    return !self.isEmptyString(num) && isFinite(num) && num % 1 == 0;
+    return self.isNumber(num) && num % 1 == 0;
   };
 
   self.isEmptyString = function (value) {
