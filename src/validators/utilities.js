@@ -83,8 +83,12 @@ ko.validators.utilities = (function () {
     return string;
   };
 
+  self.makeFunction = function (value) {
+    return self.isFunction(value) ? value : self.identity.bind(self, value);
+  };
+
   self.validateWithMessage = function (isValueValidFn, message) {
-    var messageFn = self.isFunction(message) ? message : self.identity.bind(self, message);
+    var messageFn = self.makeFunction(message);
 
     return function (value) {
       var isValid = !!isValueValidFn(value);
