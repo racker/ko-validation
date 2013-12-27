@@ -46,6 +46,10 @@ ko.validators.utilities = (function () {
     return typeof value == 'function' && Object.prototype.toString.call(value) == '[object Function]';
   };
 
+  self.identity = function (value) {
+    return value;
+  };
+
   self.getValue = function (element) {
     var type = element.type;
     if (!type || !type.toLowerCase) { return null; }
@@ -80,10 +84,12 @@ ko.validators.utilities = (function () {
   };
 
   self.validateWithMessage = function (isValueValidFn, message) {
-     return function (value) {
-       var isValid = !!isValueValidFn(value);
-       return { isValid: isValid, message: isValid ? undefined : message }
-     };
+    var messageFn = self.isFunction(message) ? message : self.identity.bind(self, message);
+
+    return function (value) {
+      var isValid = !!isValueValidFn(value);
+      return { isValid: isValid, message: isValid ? undefined : messageFn(value) }
+    };
   };
 
   return self;
