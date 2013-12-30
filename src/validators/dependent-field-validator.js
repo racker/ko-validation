@@ -1,6 +1,4 @@
 ko.validators.dependentFieldValidator = function (otherFieldId, message, comparator) {
-  var utils = ko.validators.utilities;
-
   return {
     validate: function (value) {
       var otherField, otherFieldValue, result;

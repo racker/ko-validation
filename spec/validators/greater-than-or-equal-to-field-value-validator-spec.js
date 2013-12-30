@@ -31,6 +31,12 @@ describe('ko.validators.greaterThanOrEqualToFieldValueValidator', function () {
     expect(result.isValid).toBe(false);
   });
 
+  it('should fail if the value not a number specified field', function () {
+    result = validator.validate('foo');
+
+    expect(result.isValid).toBe(false);
+  });
+
   it('should show an error message on failure', function () {
     result = validator.validate('9');
 
