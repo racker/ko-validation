@@ -14,7 +14,7 @@ myViewModel = function () {
     'required': ['FieldName'], // will show the message "FieldName is required."
     'length': ['FieldName', 30] // will show the message "FieldName cannot be longer than 30 characters."
   });
-  
+
   this['name'] = ko.observable().extend({
     'required': ['', 'Please enter your name.'] // will show "Please enter your name."
   });
@@ -39,6 +39,7 @@ Currently the following rules are supported:
 * Less Than Or Equal To Field Value `lessThanOrEqualToFieldValue`
 * Invalid Charachters `invalidChars`
 * Length `length`
+* Min Length `minLength`
 * Range `range`
 * Required `required`
 * Required Only If `onlyIf`
