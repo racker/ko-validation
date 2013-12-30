@@ -36,6 +36,7 @@ Currently the following rules are supported:
 
 * Greater Than `greaterThan`
 * Greater Than Or Equal To Field Value `greaterThanOrEqualToFieldValue`
+* Equal To Field Value `equalToFieldValue`
 * Less Than Or Equal To Field Value `lessThanOrEqualToFieldValue`
 * Invalid Charachters `invalidChars`
 * Length `length`
