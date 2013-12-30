@@ -1,4 +1,4 @@
-ko.validators.EqualToFieldValueValidator = function (fieldName, otherFieldName, otherFieldId) {
+ko.validators.equalToFieldValueValidator = function (fieldName, otherFieldName, otherFieldId) {
   return ko.validators.dependentFieldValidator(
     otherFieldId,
     ko.validators.utilities.buildString(
