@@ -25,4 +25,3 @@ describe('ko.validators.minLengthValidator', function() {
     expect(result.message).toBe('Field must contain at least 3 characters.');
   });
 });
-
