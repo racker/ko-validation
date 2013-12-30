@@ -22,7 +22,7 @@ describe('ko.validators.minLengthValidator', function() {
 
   it('should have correct message on failure', function() {
     result = validator.validate('no');
-    expect(result.message).toBe('Field must be atleast 3 characters long.');
+    expect(result.message).toBe('Field must be at least 3 characters.');
   });
 });
 
