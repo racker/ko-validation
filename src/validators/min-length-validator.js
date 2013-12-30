@@ -7,7 +7,7 @@ ko.validators.minLengthValidator = function (fieldName, length) {
         return value.toString().trim().length >= length;
       },
       utils.buildString(
-        '{$field} must be at least {$len} characters.',
+        '{$field} must contain at least {$len} characters.',
         { 'field' : fieldName, 'len' : length }
       )
     )
