@@ -7,12 +7,15 @@ describe('ko validation integration', function () {
     setFixtures(
       '<div id="parent">' +
       '<input id="required-input" data-bind="value: requiredField"/>' +
+      '<input id="equal-to-input" data-bind="value: equalField"/>' +
+      '<input id="equal-to-field-input" data-bind="value: equalToField"/>' +
       '<input id="greater-than-input" data-bind="value: greaterThanField"/>' +
       '<input id="greater-than-other-field-input" data-bind="value: greaterThanOrEqualField"/>' +
       '<input id="less-than-other-field-input" data-bind="value: lessThanOtherField"/>' +
       '<input id="sometimes-required-input" data-bind="value: sometimesRequired"/>' +
       '<input id="numeric-input" data-bind="value: integerField"/>' +
       '<input id="no-numbers-input" data-bind="value: noNumbersField"/>' +
+      '<input id="min-length-input" data-bind="value: minLengthField"/>' +
       '<input id="short-input" data-bind="value: shortField"/>' +
       '<input id="range-input" data-bind="value: rangeField"/>' +
       '<input id="regex-input" data-bind="value: regexField"/>' +
@@ -28,6 +31,10 @@ describe('ko validation integration', function () {
     viewModel = {
       requiredField: ko.observable('').extend({
         'required': ['First Name']
+      }),
+      equalField: ko.observable(''),
+      equalToField: ko.observable('').extend({
+        'equalToFieldValue': [ 'Equal to value', 'Equal value', 'equal-to-input' ]
       }),
       greaterThanField: ko.observable('').extend({
         'greaterThan': [ 'Big number', 42 ]
@@ -46,6 +53,9 @@ describe('ko validation integration', function () {
       }),
       shortField: ko.observable('').extend({
         'length': [ 'Short', 8 ]
+      }),
+      minLengthField: ko.observable('').extend({
+        'minLength': ['Min Length', 5]
       }),
       rangeField: ko.observable('').extend({
         'range': [ 'Ranged', 10, 100 ]
@@ -76,6 +86,38 @@ describe('ko validation integration', function () {
       $('#required-input').val('Jonh').trigger('change');
 
       expect(viewModel.requiredField).toBeValid();
+    });
+  });
+
+  describe('equal to field validator', function () {
+    beforeEach(function () {
+      $('#equal-to-input').val('foo').trigger('change');
+    });
+
+    it('is valid when both input values are the same', function () {
+      $('#equal-to-field-input').val('foo').trigger('change');
+
+      expect(viewModel.equalToField).toBeValid();
+    });
+
+    it('is not valid when has different values', function () {
+      $('#equal-to-field-input').val('bar').trigger('change');
+
+      expect(viewModel.equalToField).not.toBeValid();
+    });
+  });
+
+  describe('min length field validator', function () {
+    it('is valid when length in greather than the min length', function () {
+      $('#min-length-input').val('foobar').trigger('change');
+
+      expect(viewModel.minLengthField).toBeValid();
+    });
+
+    it('is not valid when value length is smaller than min length', function () {
+      $('#min-length-input').val('foo').trigger('change');
+
+      expect(viewModel.minLengthField).not.toBeValid();
     });
   });
 
