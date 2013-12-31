@@ -3,7 +3,7 @@ describe('Validation message element', function () {
 
   beforeEach(function () {
     viewModel = {
-      firstName: ko.observable('').extend({ 'required': ['First Name'] })
+      firstName: ko.observable('').extend({ 'required': ['First Name'], 'length': ['First Name', 10] })
     };
   });
 
@@ -39,6 +39,16 @@ describe('Validation message element', function () {
       expect(validationElement.text()).toBe('');
       expect(validationElement).toHaveClass('validation-message');
       expect(validationElement).toHaveClass('validation-fixed');
+    });
+
+    it('updates the element text when the validation message changes but the state does not', function () {
+      var validationElement;
+
+      $('#firstName').val('').trigger('change');
+      $('#firstName').val('Extra Long Name That Should Not Be Valid').trigger('change');
+
+      validationElement = $($('#parent').children()[1]);
+      expect(validationElement.text()).toBe('First Name cannot be longer than 10 characters.');
     });
   });
 
