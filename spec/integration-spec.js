@@ -61,7 +61,7 @@ describe('ko validation integration', function () {
         'range': [ 'Ranged', 10, 100 ]
       }),
       regexField: ko.observable('').extend({
-        'regex': [ /^[0-9]+$/, 'Regular' ]
+        'regex': [ 'Regular', /^[0-9]+$/ ]
       }),
       customField: ko.observable('').extend({
         'custom': [customValidatorFunction, customValidatorContext]
