@@ -1,8 +1,8 @@
 describe('ko.validators.regexValidator', function () {
   it('is valid if value matches regex', function () {
     var validator = ko.validators.regexValidator(
-      'This is the message that is shown when a field is invalid.',
-        /^valid$/
+        /^valid$/,
+      'This is the message that is shown when a field is invalid.'
     );
 
     expect(validator.validate('valid').isValid).toBe(true);
@@ -10,8 +10,8 @@ describe('ko.validators.regexValidator', function () {
 
   it('is invalid if value does not match regex', function () {
     var validator = ko.validators.regexValidator(
-      'This is the message that is shown when a field is invalid.',
-        /^valid$/
+        /^valid$/,
+      'This is the message that is shown when a field is invalid.'
     );
 
     expect(validator.validate('invalid')).toEqual({

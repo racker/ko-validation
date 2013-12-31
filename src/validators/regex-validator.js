@@ -1,4 +1,4 @@
-ko.validators.regexValidator = function (message, regex) {
+ko.validators.regexValidator = function (regex, message) {
   var utils = ko.validators.utilities;
 
   return ko.validators.customValidator(
