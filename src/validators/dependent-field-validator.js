@@ -1,4 +1,4 @@
-ko.validators.delayedValueValidator = function (delayedValue, message, comparator) {
+ko.validators.compareWithDelayedValueValidator = function (delayedValue, comparator, message) {
   return ko.validators.customValidator(
     ko.validators.utilities.validateWithMessage(
       function (value) {
@@ -10,7 +10,9 @@ ko.validators.delayedValueValidator = function (delayedValue, message, comparato
 };
 
 ko.validators.dependentFieldValidator = function (otherFieldId, message, comparator) {
-  var delayedOtherFieldValue = ko.validators.utilities.delayedValueByElementId(otherFieldId);
+  var delayedOtherFieldValue = utils.delayedValueByElementId(otherFieldId);
 
-  return ko.validators.delayedValueValidator(delayedOtherFieldValue, message, comparator);
+  return ko.validators.compareWithDelayedValueValidator(
+    delayedOtherFieldValue, comparator, message
+  );
 };
