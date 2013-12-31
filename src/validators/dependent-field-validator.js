@@ -1,16 +1,16 @@
+ko.validators.delayedValueValidator = function (delayedValue, message, comparator) {
+  return ko.validators.customValidator(
+    ko.validators.utilities.validateWithMessage(
+      function (value) {
+        return comparator(value, delayedValue());
+      },
+      message
+    )
+  );
+};
+
 ko.validators.dependentFieldValidator = function (otherFieldId, message, comparator) {
-  return {
-    validate: function (value) {
-      var otherField, otherFieldValue, result;
+  var delayedOtherFieldValue = ko.validators.utilities.delayedValueByElementId(otherFieldId);
 
-      otherField = document.getElementById(otherFieldId);
-      otherFieldValue = otherField.value;
-
-      result = {};
-      result.isValid = comparator(value, otherFieldValue);
-      result.message = message;
-
-      return result;
-    }
-  };
+  return ko.validators.delayedValueValidator(delayedOtherFieldValue, message, comparator);
 };

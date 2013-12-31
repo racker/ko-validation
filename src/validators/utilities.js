@@ -63,6 +63,12 @@ ko.validators.utilities = (function () {
     }
   };
 
+  self.delayedValueByElementId = function (elementId) {
+    return function () {
+      return self.getValue(document.getElementById(elementId));
+    };
+  };
+
   self.objectForEach = function (object, callback) {
     for (var key in object) {
       if (object.hasOwnProperty(key)) {
