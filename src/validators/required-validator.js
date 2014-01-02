@@ -5,19 +5,17 @@ ko.validators.requiredValidator = function (fieldName, customMessage) {
     {'fieldName': fieldName}
   );
 
-  return ko.validators.customValidator(
-    utils.validateWithMessage(
-      function (value) {
-        if (utils.isArray(value)) {
-          return value.length > 0;
-        }
-        if (utils.isNumber(value)) {
-          return true;
-        }
-        return !!value;
-      },
-      customMessage
-    )
+  return ko.validators.customValidatorWithMessage(
+    function (value) {
+      if (utils.isArray(value)) {
+        return value.length > 0;
+      }
+      if (utils.isNumber(value)) {
+        return true;
+      }
+      return !!value;
+    },
+    customMessage
   );
 };
 
