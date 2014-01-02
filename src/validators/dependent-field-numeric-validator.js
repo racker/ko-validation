@@ -1,13 +1,11 @@
 ko.validators.dependentFieldNumericValidator = function (otherFieldId, message, comparator) {
-  var utils, delayedOtherFieldValue;
-  utils = ko.validators.utilities;
-  delayedOtherFieldValue = utils.delayedValueByElementId(otherFieldId);
+  var utils = ko.validators.utilities;
 
   return ko.validators.customValidatorWithMessage(
     function (value) {
       var otherFieldValue, valueNumeric, otherFieldValueNumeric;
 
-      otherFieldValue = delayedOtherFieldValue();
+      otherFieldValue = utils.getValueByElementId(otherFieldId);
       if (!utils.isInteger(otherFieldValue)) {
         return true;
       }
