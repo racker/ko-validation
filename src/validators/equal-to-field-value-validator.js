@@ -3,15 +3,13 @@ ko.validators.equalToFieldValueValidator = function (fieldName, otherFieldName, 
   utils = ko.validators.utilities;
   delayedOtherFieldValue = utils.delayedValueByElementId(otherFieldId);
 
-  return ko.validators.customValidator(
-    utils.validateWithMessage(
-      function (value) {
-        return value === delayedOtherFieldValue();
-      },
-      utils.buildString(
-        '{$field} must be equal to {$otherField}.',
-        { 'field': fieldName, 'otherField': otherFieldName }
-      )
+  return ko.validators.customValidatorWithMessage(
+    function (value) {
+      return value === delayedOtherFieldValue();
+    },
+    utils.buildString(
+      '{$field} must be equal to {$otherField}.',
+      { 'field': fieldName, 'otherField': otherFieldName }
     )
   );
 };
