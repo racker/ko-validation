@@ -67,7 +67,11 @@ ko.validation.registerValidator = function (name, validatorFactory) {
 
     if (isFirstValidatorForObservable) {
       observable.__validators__ = [];
-      observable.validationState = ko.observable(ko.validation.validationStates.PRISTINE);
+      observable.validationState = ko.observable(
+        ko.validation.validationStates.PRISTINE
+      ).extend({
+        'notify': 'always'
+      });
       observable.validationMessage = ko.observable('');
       observable.validate = function () {
         ko.validation.utils.runValidations(observable);
