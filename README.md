@@ -112,3 +112,13 @@ Template:
 ```
 
 When an element with `validationMessage` binding exists, new elements for displaying validation messages will not be automatically inserted in the DOM.
+
+## Contributing
+
+If you want to contribute to ko-validation, you will need npm and grunt-cli.
+
+After installing the dependencies with npm, run `grunt watch` to start the test watcher, which will run the tests in both Chrome and Firefox every time a file is modified. You can also use `grunt karma:ci` to run all the tests with PhantomJS.
+
+When submitting a pull request, do not forget to add unit tests, and if you are introducing a new validator, please also add integration tests for it.
+
+To create a new distribution file with a patch version, run `npm version patch -m "Upgrade to %s for reasons"` (with whatever is the most appropriate message), then run `grunt dist` to generate the minified concatenated dist file. You can then `npm publish` the new version to npm.
