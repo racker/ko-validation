@@ -86,6 +86,40 @@ describe('ko.validation.utilities', function () {
     });
   });
 
+  describe('validateWithMessage', function () {
+    it('returns a valid result when function returns true', function () {
+      var validationFn, result;
+      validationFn = jasmine.createSpy('validationFunction').andReturn(true);
+
+      result = utilities.validateWithMessage(validationFn)('valid value');
+
+      expect(result).toEqual({ isValid: true });
+      expect(validationFn).toHaveBeenCalledWith('valid value');
+    });
+
+    it('returns an invalid result when function returns false', function () {
+      var validationFn, result;
+      validationFn = jasmine.createSpy('validationFunction').andReturn(false);
+
+      result = utilities.validateWithMessage(validationFn, 'value is invalid')('invalid value');
+
+      expect(result).toEqual({ isValid: false, message: 'value is invalid' });
+      expect(validationFn).toHaveBeenCalledWith('invalid value');
+    });
+
+    it('accepts an function message', function () {
+      var validationFn, messageFn, result;
+      validationFn = jasmine.createSpy('validationFunction').andReturn(false);
+      messageFn = jasmine.createSpy('messageFunction').andReturn('fix this, dude');
+
+      result = utilities.validateWithMessage(validationFn, messageFn)('invalid value');
+
+      expect(result).toEqual({ isValid: false, message: 'fix this, dude' });
+      expect(validationFn).toHaveBeenCalledWith('invalid value');
+      expect(messageFn).toHaveBeenCalledWith('invalid value');
+    });
+  });
+
   describe('getValue', function () {
     describe('for text inputs', function () {
       it('gets the input value', function () {
