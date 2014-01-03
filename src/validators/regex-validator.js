@@ -5,13 +5,11 @@ ko.validators.regexValidator = function (regex, fieldName, messageFragment) {
     { 'regex': regex }
   );
 
-  return ko.validators.customValidator(
-    utils.validateWithMessage(
-      regex.test.bind(regex),
-      utils.buildString(
-        '{$field} {$messageFragment}.',
-        { 'field': fieldName, 'messageFragment': messageFragment }
-      )
+  return ko.validators.customValidatorWithMessage(
+    regex.test.bind(regex),
+    utils.buildString(
+      '{$field} {$messageFragment}.',
+      { 'field': fieldName, 'messageFragment': messageFragment }
     )
   );
 };

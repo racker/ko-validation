@@ -63,6 +63,10 @@ ko.validators.utilities = (function () {
     }
   };
 
+  self.getValueByElementId = function (elementId) {
+    return self.getValue(document.getElementById(elementId));
+  };
+
   self.objectForEach = function (object, callback) {
     for (var key in object) {
       if (object.hasOwnProperty(key)) {
