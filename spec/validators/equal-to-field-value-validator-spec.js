@@ -30,5 +30,17 @@ describe('ko.validators.equalToFieldValueValidator', function () {
 
     expect(result.message).toBe('FieldName must be equal to OtherFieldName.');
   });
+
+  it('should accept a custom error message', function () {
+    validator = ko.validators.equalToFieldValueValidator(
+      'FieldName',
+      'OtherFieldName',
+      'otherField',
+      'Custom validation message'
+    );
+    result = validator.validate('bar');
+
+    expect(result.message).toBe('Custom validation message');
+  });
 });
 
