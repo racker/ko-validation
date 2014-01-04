@@ -9,7 +9,7 @@ describe('ko.validators.emailValidator', function () {
     result = validator.validate('knockout@validation');
     expect(result).toEqual({
       isValid: false,
-      message: 'Invalid email address.'
+      message: 'Email address is not valid.'
     });
   });
 
@@ -17,7 +17,7 @@ describe('ko.validators.emailValidator', function () {
     result = validator.validate('knock!out@validation.com');
     expect(result).toEqual({
       isValid: false,
-      message: 'Invalid email address.'
+      message: 'Email address is not valid.'
     });
   });
 
