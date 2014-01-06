@@ -50,18 +50,6 @@ ko.validators.utilities = (function () {
     return value;
   };
 
-  self.greaterThanOrEqualTo = function (minimum) {
-    return function (value) {
-      return value >= minimum;
-    };
-  };
-
-  self.lessThanOrEqualTo = function (maximum) {
-    return function (value) {
-      return value <= maximum;
-    };
-  };
-
   self.getValue = function (element) {
     var type = element.type;
     if (!type || !type.toLowerCase) { return null; }
