@@ -9,14 +9,14 @@ ko.validators.lengthValidator = function (operation, message) {
 
 ko.validators.maxLengthValidator = function (length, message) {
   return ko.validators.lengthValidator(
-    ko.validators.operators.lessThanOrEqualTo(length),
+    ko.func.operators.lessThanOrEqualTo(length),
     message
   );
 };
 
 ko.validators.minLengthValidator = function (length, message) {
   return ko.validators.lengthValidator(
-    ko.validators.operators.greaterThanOrEqualTo(length),
+    ko.func.operators.greaterThanOrEqualTo(length),
     message
   );
 };

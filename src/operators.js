@@ -1,4 +1,4 @@
-ko.validators.operators = (function () {
+ko.func.operators = (function () {
   var self = {};
 
   var callWith = function (value) {
