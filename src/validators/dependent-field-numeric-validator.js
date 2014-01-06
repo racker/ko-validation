@@ -1,16 +1,20 @@
 ko.validators.dependentFieldNumericValidator = function (otherFieldId, message, comparator) {
   var utils = ko.validators.utilities;
 
-  return ko.validators.dependentFieldValidator(otherFieldId, message, function (value, otherFieldValue) {
-    var otherField, otherFieldValue, valueNumeric, otherFieldValueNumeric, result;
+  return ko.validators.customValidatorWithMessage(
+    function (value) {
+      var otherFieldValue, valueNumeric, otherFieldValueNumeric;
 
-    if (!utils.isInteger(otherFieldValue)) {
-      return true;
-    }
+      otherFieldValue = utils.getValueByElementId(otherFieldId);
+      if (!utils.isInteger(otherFieldValue)) {
+        return true;
+      }
 
-    valueNumeric = parseInt(value, 10);
-    otherFieldValueNumeric = parseInt(otherFieldValue, 10);
+      valueNumeric = parseInt(value, 10);
+      otherFieldValueNumeric = parseInt(otherFieldValue, 10);
 
-    return utils.isInteger(value) && comparator(valueNumeric, otherFieldValueNumeric);
-  });
+      return utils.isInteger(value) && comparator(valueNumeric, otherFieldValueNumeric);
+    },
+    message
+  );
 };

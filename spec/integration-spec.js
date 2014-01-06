@@ -19,6 +19,7 @@ describe('ko validation integration', function () {
       '<input id="short-input" data-bind="value: shortField"/>' +
       '<input id="range-input" data-bind="value: rangeField"/>' +
       '<input id="regex-input" data-bind="value: regexField"/>' +
+      '<input id="email-input" data-bind="value: emailField"/>' +
       '<input id="custom-input" data-bind="value: customField"/>' +
       '</div>'
     );
@@ -63,6 +64,9 @@ describe('ko validation integration', function () {
       regexField: ko.observable('').extend({
         'regex': [ /^[0-9]+$/, 'Regular' ]
       }),
+      emailField: ko.observable('').extend({
+        'email': [ ]
+      }),
       customField: ko.observable('').extend({
         'custom': [customValidatorFunction, customValidatorContext]
       }),
@@ -73,6 +77,20 @@ describe('ko validation integration', function () {
     });
 
     ko.applyBindings(viewModel, $('#parent')[0]);
+  });
+
+  describe('for email validator', function () {
+    it('is invalid', function () {
+      $('#email-input').val('test@wrong-email').trigger('change');
+
+      expect(viewModel.emailField).not.toBeValid();
+    });
+
+    it('is valid', function () {
+      $('#required-input').val('test@wrong.email').trigger('change');
+
+      expect(viewModel.emailField).toBeValid();
+    });
   });
 
   describe('for required validator', function () {

@@ -46,6 +46,10 @@ ko.validators.utilities = (function () {
     return typeof value == 'function' && Object.prototype.toString.call(value) == '[object Function]';
   };
 
+  self.identity = function (value) {
+    return value;
+  };
+
   self.getValue = function (element) {
     var type = element.type;
     if (!type || !type.toLowerCase) { return null; }
@@ -61,6 +65,10 @@ ko.validators.utilities = (function () {
       default:
         return element.value ? element.value : null;
     }
+  };
+
+  self.getValueByElementId = function (elementId) {
+    return self.getValue(document.getElementById(elementId));
   };
 
   self.objectForEach = function (object, callback) {
@@ -79,11 +87,17 @@ ko.validators.utilities = (function () {
     return string;
   };
 
+  self.makeFunction = function (value) {
+    return self.isFunction(value) ? value : self.identity.bind(self, value);
+  };
+
   self.validateWithMessage = function (isValueValidFn, message) {
-     return function (value) {
-       var isValid = !!isValueValidFn(value);
-       return { isValid: isValid, message: isValid ? undefined : message }
-     };
+    var messageFn = self.makeFunction(message);
+
+    return function (value) {
+      var isValid = !!isValueValidFn(value);
+      return { isValid: isValid, message: isValid ? undefined : messageFn(value) }
+    };
   };
 
   return self;
