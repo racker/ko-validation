@@ -1,10 +1,20 @@
 ko.validators.operators = (function () {
   var self = {};
 
-  self.and = function (funOne, funTwo) {
-    return function (value) {
-      return funOne(value) && funTwo(value);
+  var callWith = function (value) {
+    return function (fn) {
+      return fn(value);
     };
+  };
+
+  self.and = function (a, b) {
+    return a && b;
+  };
+
+  self.onAllTrue = function (predicates) {
+    return function (value) {
+      return predicates.map(callWith(value)).reduce(self.and, true);
+    }
   };
 
   self.strictEquals = function (other) {
@@ -38,10 +48,10 @@ ko.validators.operators = (function () {
   };
 
   self.range = function (minimum, maximum) {
-    return self.and(
+    return self.onAllTrue([
       self.greaterThanOrEqualTo(minimum),
       self.lessThanOrEqualTo(maximum)
-    );
+    ]);
   };
 
   return self;
