@@ -79,14 +79,6 @@ ko.validators.utilities = (function () {
     }
   };
 
-  self.buildString = function (string, args) {
-    self.objectForEach(args, function (argument, argumentName) {
-      var regex = new RegExp('\\{\\$' + argumentName + '\\}', 'g');
-      string = string.replace(regex, argument);
-    });
-    return string;
-  };
-
   self.makeFunction = function (value) {
     return self.isFunction(value) ? value : self.identity.bind(self, value);
   };

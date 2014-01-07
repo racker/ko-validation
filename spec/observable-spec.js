@@ -17,7 +17,7 @@ describe('observables validation', function () {
   it('can be validated calling "validate"', function () {
     var observable;
 
-    observable = ko.observable().extend({ 'required': ['Required Field'] });
+    observable = ko.observable().extend({ 'required': ['Required Field is required.'] });
 
     observable.validate();
 
@@ -30,7 +30,7 @@ describe('observables validation', function () {
     var observable, viewModel;
 
     beforeEach(function () {
-      observable = ko.observable().extend({ required: ['Value'] });
+      observable = ko.observable().extend({ required: ['Value is required.'] });
       viewModel = { obs: observable };
 
       setFixtures('<div id="parent"><input id="input" data-bind="value: obs"/></div>');

@@ -2,7 +2,7 @@ describe('ko.validators.invalidCharsValidator', function () {
   var validator;
 
   beforeEach(function() {
-    validator = ko.validators.invalidCharsValidator('Field', ['a', 'b']);
+    validator = ko.validators.invalidCharsValidator(['a', 'b'], "Must not contain 'a' nor 'b'.");
   });
 
   it('passes when the value does not contain invalid chars', function() {
@@ -14,30 +14,20 @@ describe('ko.validators.invalidCharsValidator', function () {
   });
 
   it('passes with an empty string', function() {
-    expect(validator.validate('').isValid).toBe(true);
+    expect(validator.validate('')).toEqual({ isValid: true });
   });
 
   it('works with spaces', function() {
-    validator = ko.validators.invalidCharsValidator('Field', [' ']);
+    validator = ko.validators.invalidCharsValidator([' ']);
     expect(validator.validate('fo o').isValid).toBe(false);
     expect(validator.validate('foo').isValid).toBe(true);
   });
 
-  it('has empty message on valid value', function() {
-    expect(validator.validate('foo').message).toBe('');
-  });
-
   it('has correct message on failure', function() {
-    expect(validator.validate('fooa').message).toBe(
-      'Field cannot contain any of the characters: ab.');
-  });
-
-  it('allows a custom message', function () {
-    validator = ko.validators.invalidCharsValidator('Field', ['a', 'b'], 'Custom Message');
-    result = validator.validate('ball');
-
-    expect(result.isValid).toBe(false);
-    expect(result.message).toBe('Custom Message');
+    expect(validator.validate('fooa')).toEqual({
+      isValid: false,
+      message: "Must not contain 'a' nor 'b'."
+    });
   });
 });
 

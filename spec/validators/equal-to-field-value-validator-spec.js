@@ -7,9 +7,8 @@ describe('ko.validators.equalToFieldValueValidator', function () {
     otherField.val('foo');
 
     validator = ko.validators.equalToFieldValueValidator(
-      'FieldName',
-      'OtherFieldName',
-      'otherField'
+      'otherField',
+      'This must be equal to that'
     );
   });
 
@@ -28,7 +27,7 @@ describe('ko.validators.equalToFieldValueValidator', function () {
   it('should show an error message on failure', function () {
     result = validator.validate('bar');
 
-    expect(result.message).toBe('FieldName must be equal to OtherFieldName.');
+    expect(result.message).toBe('This must be equal to that');
   });
 });
 

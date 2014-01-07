@@ -2,7 +2,7 @@ describe('ko.validators.rangeValidator', function() {
   var validator, result;
 
   beforeEach(function() {
-    validator = ko.validators.rangeValidator('Field', 1, 10);
+    validator = ko.validators.rangeValidator(1, 10, 'Must be between 1 and 10.');
   });
 
   it('should pass if value is a number within range', function() {
@@ -37,25 +37,15 @@ describe('ko.validators.rangeValidator', function() {
 
   it('should provide an empty error message when valid', function() {
     result = validator.validate(10);
-    expect(result.isValid).toBe(true);
-    expect(result.message).toBe('');
+    expect(result).toEqual({ isValid: true });
   });
 
   it('should provide a meaningful error message when not valid', function() {
     result = validator.validate(0);
-    expect(result.message).toBe('Field must be between 1 and 10');
-  });
-
-  it('should display a single value message when min and max are equal', function () {
-    validator = ko.validators.rangeValidator('Field', 10, 10);
-    result = validator.validate(0);
-    expect(result.message).toBe('Field must be 10');
-  });
-
-  it('can have a custom message', function () {
-    validator = ko.validators.rangeValidator('Field', 10, 15, 'This value is not valid, dude!');
-    result = validator.validate(0);
-    expect(result.message).toBe('This value is not valid, dude!');
+    expect(result).toEqual({
+      isValid: false,
+      message: 'Must be between 1 and 10.'
+    });
   });
 });
 

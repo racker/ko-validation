@@ -7,9 +7,8 @@ describe('ko.validators.lessThanOrEqualToFieldValueValidator', function () {
     otherField.val('10');
 
     validator = ko.validators.lessThanOrEqualToFieldValueValidator(
-      'FieldName',
-      'OtherFieldName',
-      'otherField'
+      'otherField',
+      'This must be less than or equal to that'
     );
   });
 
@@ -34,7 +33,7 @@ describe('ko.validators.lessThanOrEqualToFieldValueValidator', function () {
   it('shows an error message on failure', function () {
     result = validator.validate('11');
 
-    expect(result.message).toBe('FieldName must be less than or equal to OtherFieldName.');
+    expect(result.message).toBe('This must be less than or equal to that');
   });
 });
 

@@ -1,7 +1,7 @@
-ko.validators.dependentFieldNumericValidator = function (otherFieldId, message, comparator) {
+ko.validators.dependentFieldNumericValidator = function (otherFieldId, comparator, message) {
   var utils = ko.validators.utilities;
 
-  return ko.validators.customValidatorWithMessage(
+  return ko.validators.validatorWithMessage(
     function (value) {
       var otherFieldValue, valueNumeric, otherFieldValueNumeric;
 

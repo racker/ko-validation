@@ -1,11 +1,7 @@
-ko.validators.requiredValidator = function (fieldName, customMessage) {
+ko.validators.requiredValidator = function (message) {
   var utils = ko.validators.utilities;
-  customMessage = customMessage || utils.buildString(
-    '{$fieldName} is required.',
-    {'fieldName': fieldName}
-  );
 
-  return ko.validators.customValidatorWithMessage(
+  return ko.validators.validatorWithMessage(
     function (value) {
       if (utils.isArray(value)) {
         return value.length > 0;
@@ -15,7 +11,7 @@ ko.validators.requiredValidator = function (fieldName, customMessage) {
       }
       return !!value;
     },
-    customMessage
+    message
   );
 };
 

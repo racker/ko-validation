@@ -3,7 +3,10 @@ describe('Validation message element', function () {
 
   beforeEach(function () {
     viewModel = {
-      firstName: ko.observable('').extend({ 'required': ['First Name'], 'length': ['First Name', 10] })
+      firstName: ko.observable('').extend({
+        'required': ['First Name is required.'],
+        'maxLength': [10, 'Up to 10 chars, please.']
+      })
     };
   });
 
@@ -48,7 +51,7 @@ describe('Validation message element', function () {
       $('#firstName').val('Extra Long Name That Should Not Be Valid').trigger('change');
 
       validationElement = $($('#parent').children()[1]);
-      expect(validationElement.text()).toBe('First Name cannot be longer than 10 characters.');
+      expect(validationElement.text()).toBe('Up to 10 chars, please.');
     });
   });
 

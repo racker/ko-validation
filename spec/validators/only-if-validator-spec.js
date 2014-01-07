@@ -35,7 +35,7 @@ describe('ko.validators.onlyIfValidator', function () {
     var validator = ko.validators.onlyIfValidator(
       constant(true),
       {
-        'required': ['field_name', 'In these particular condition, this field is required.']
+        'required': ['In these particular condition, this field is required.']
       }
     );
 

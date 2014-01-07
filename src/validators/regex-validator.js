@@ -1,16 +1,7 @@
-ko.validators.regexValidator = function (regex, fieldName, messageFragment) {
-  var utils = ko.validators.utilities;
-  messageFragment = messageFragment || ko.validators.utilities.buildString(
-    'does not match {$regex}',
-    { 'regex': regex }
-  );
-
-  return ko.validators.customValidatorWithMessage(
+ko.validators.regexValidator = function (regex, message) {
+  return ko.validators.validatorWithMessage(
     regex.test.bind(regex),
-    utils.buildString(
-      '{$field} {$messageFragment}.',
-      { 'field': fieldName, 'messageFragment': messageFragment }
-    )
+    message
   );
 };
 

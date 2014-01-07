@@ -12,7 +12,7 @@ describe('Computed observable validation', function () {
       return '';
     }).extend({
       'validatesAfter': [viewModel.firstName, viewModel.lastName],
-      'required': ['Full Name']
+      'required': ['Full Name is required.']
     });
 
     setFixtures(

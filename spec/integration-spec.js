@@ -31,41 +31,41 @@ describe('ko validation integration', function () {
 
     viewModel = {
       requiredField: ko.observable('').extend({
-        'required': ['First Name']
+        'required': ['First Name is required.']
       }),
       equalField: ko.observable(''),
       equalToField: ko.observable('').extend({
-        'equalToFieldValue': [ 'Equal to value', 'Equal value', 'equal-to-input' ]
+        'equalToFieldValue': [ 'equal-to-input', 'Must be equal to the other.' ]
       }),
       greaterThanField: ko.observable('').extend({
-        'greaterThan': [ 'Big number', 42 ]
+        'greaterThan': [ 42, 'Must be greater than 42.' ]
       }),
       greaterThanOrEqualField: ko.observable('').extend({
-        'greaterThanOrEqualToFieldValue': [ 'Big number', 'Small Number', 'greater-than-input' ]
+        'greaterThanOrEqualToFieldValue': [ 'greater-than-input', 'Must be greater than that.' ]
       }),
       lessThanOtherField: ko.observable('').extend({
-        'lessThanOrEqualToFieldValue': [ 'Small number', 'Big number', 'greater-than-input' ]
+        'lessThanOrEqualToFieldValue': [ 'greater-than-input', 'Must be less than that.' ]
       }),
       integerField: ko.observable('').extend({
-        'integer': [ 'A number' ]
+        'integer': [ 'Must be number' ]
       }),
       noNumbersField: ko.observable('').extend({
-        'invalidChars': [ 'No numbers', '1234567890'.split('') ]
+        'invalidChars': [ '1234567890'.split(''), 'Must not have numbers.' ]
       }),
       shortField: ko.observable('').extend({
-        'length': [ 'Short', 8 ]
+        'maxLength': [ 8, 'Must be short.' ]
       }),
       minLengthField: ko.observable('').extend({
-        'minLength': ['Min Length', 5]
+        'minLength': [ 5, 'Must be long.' ]
       }),
       rangeField: ko.observable('').extend({
-        'range': [ 'Ranged', 10, 100 ]
+        'range': [ 10, 100, 'Must be between 10 and 100.' ]
       }),
       regexField: ko.observable('').extend({
-        'regex': [ /^[0-9]+$/, 'Regular' ]
+        'regex': [ /^[0-9]+$/, 'Must have only digits.' ]
       }),
       emailField: ko.observable('').extend({
-        'email': [ ]
+        'email': [ 'Must be an email.' ]
       }),
       customField: ko.observable('').extend({
         'custom': [customValidatorFunction, customValidatorContext]
@@ -213,7 +213,7 @@ describe('ko validation integration', function () {
     });
   });
 
-  describe('for length validator', function () {
+  describe('for max length validator', function () {
     it('is invalid', function () {
       $('#short-input').val('exceedingly long value').trigger('change');
 
