@@ -1,26 +1,13 @@
-ko.validators.invalidCharsValidator = function (fieldName, invalidChars, customMessage) {
-  return {
-    validate: function (value) {
-      var valueAsString, result;
+ko.validators.invalidCharsValidator = function (invalidChars, message) {
+  return ko.validators.customValidatorWithMessage(
+    function (value) {
+      var valueAsString = value.toString();
 
-      valueAsString = value.toString();
-
-      isValid = true;
-      ko.utils.arrayForEach(invalidChars, function (character) {
-        if (valueAsString.indexOf(character) >= 0) {
-          isValid = false;
-        }
+      return !ko.utils.arrayFirst(invalidChars, function (character) {
+        return (valueAsString.indexOf(character) >= 0);
       });
-
-      result = {};
-      result.isValid = isValid;
-      result.message = result.isValid ? '' : customMessage || ko.validators.utilities.buildString(
-       '{$field} cannot contain any of the characters: {$chars}.',
-        {'field' : fieldName, 'chars': invalidChars.join('')}
-      );
-
-      return result;
-    }
-  };
+    },
+    message
+  );
 };
 
