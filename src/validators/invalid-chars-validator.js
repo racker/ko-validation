@@ -1,5 +1,5 @@
 ko.validators.invalidCharsValidator = function (invalidChars, message) {
-  return ko.validators.customValidatorWithMessage(
+  return ko.validators.validatorWithMessage(
     function (value) {
       var valueAsString = value.toString();
 

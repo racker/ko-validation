@@ -1,5 +1,5 @@
 ko.validators.rangeValidator = function (min, max, message) {
-  return ko.validators.customValidatorWithMessage(
+  return ko.validators.validatorWithMessage(
     function (value) {
       var numericValue, isInteger, isWithinRange, result;
 

@@ -1,7 +1,7 @@
 ko.validators.requiredValidator = function (message) {
   var utils = ko.validators.utilities;
 
-  return ko.validators.customValidatorWithMessage(
+  return ko.validators.validatorWithMessage(
     function (value) {
       if (utils.isArray(value)) {
         return value.length > 0;
