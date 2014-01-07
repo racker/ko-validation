@@ -2,7 +2,7 @@ describe('ko.validators.emailValidator', function () {
   var validator, result;
 
   beforeEach(function () {
-    validator = ko.validators.emailValidator();
+    validator = ko.validators.emailValidator('Email address is not valid.');
   });
 
   it('is invalid for bad domain name in email', function () {
@@ -23,6 +23,6 @@ describe('ko.validators.emailValidator', function () {
 
   it('is valid for proper email input', function () {
     result = validator.validate('knockout@validation.com');
-    expect(result.isValid).toBe(true);
+    expect(result).toEqual({ isValid: true });
   });
 });

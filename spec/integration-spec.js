@@ -65,7 +65,7 @@ describe('ko validation integration', function () {
         'regex': [ /^[0-9]+$/, 'Must have only digits.' ]
       }),
       emailField: ko.observable('').extend({
-        'email': [ ]
+        'email': [ 'Must be an email.' ]
       }),
       customField: ko.observable('').extend({
         'custom': [customValidatorFunction, customValidatorContext]
