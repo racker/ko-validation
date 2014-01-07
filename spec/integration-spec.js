@@ -62,7 +62,7 @@ describe('ko validation integration', function () {
         'range': [ 10, 100, 'Must be between 10 and 100.' ]
       }),
       regexField: ko.observable('').extend({
-        'regex': [ /^[0-9]+$/, 'Regular' ]
+        'regex': [ /^[0-9]+$/, 'Must have only digits.' ]
       }),
       emailField: ko.observable('').extend({
         'email': [ ]
