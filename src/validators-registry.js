@@ -2,7 +2,7 @@
   ko.validation.registerValidator('greaterThanOrEqualToFieldValue', ko.validators.greaterThanOrEqualToFieldValueValidator);
   ko.validation.registerValidator('equalToFieldValue', ko.validators.equalToFieldValueValidator),
   ko.validation.registerValidator('invalidChars', ko.validators.invalidCharsValidator);
-  ko.validation.registerValidator('length', ko.validators.lengthValidator);
+  ko.validation.registerValidator('maxLength', ko.validators.maxLengthValidator);
   ko.validation.registerValidator('minLength', ko.validators.minLengthValidator);
   ko.validation.registerValidator('lessThanOrEqualToFieldValue', ko.validators.lessThanOrEqualToFieldValueValidator);
   ko.validation.registerValidator('range', ko.validators.rangeValidator);

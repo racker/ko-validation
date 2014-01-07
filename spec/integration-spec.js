@@ -53,7 +53,7 @@ describe('ko validation integration', function () {
         'invalidChars': [ '1234567890'.split(''), 'Must not have numbers.' ]
       }),
       shortField: ko.observable('').extend({
-        'length': [ 8, 'Must be short.' ]
+        'maxLength': [ 8, 'Must be short.' ]
       }),
       minLengthField: ko.observable('').extend({
         'minLength': ['Min Length', 5]
@@ -213,7 +213,7 @@ describe('ko validation integration', function () {
     });
   });
 
-  describe('for length validator', function () {
+  describe('for max length validator', function () {
     it('is invalid', function () {
       $('#short-input').val('exceedingly long value').trigger('change');
 

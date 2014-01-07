@@ -1,8 +1,8 @@
-describe('ko.validators.lengthValidator', function() {
+describe('ko.validators.maxLengthValidator', function() {
   var validator, result;
 
   beforeEach(function() {
-    validator = ko.validators.lengthValidator(5, 'Cannot be longer than 5 characters.');
+    validator = ko.validators.maxLengthValidator(5, 'Cannot be longer than 5 characters.');
   });
 
   it('should pass if the length is in the limit', function() {
