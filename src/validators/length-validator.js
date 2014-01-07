@@ -13,10 +13,3 @@ ko.validators.maxLengthValidator = function (length, message) {
     message
   );
 };
-
-ko.validators.minLengthValidator = function (length, message) {
-  return ko.validators.lengthValidator(
-    ko.func.operators.greaterThanOrEqualTo(length),
-    message
-  );
-};

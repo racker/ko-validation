@@ -15,7 +15,6 @@ describe('ko validation integration', function () {
       '<input id="sometimes-required-input" data-bind="value: sometimesRequired"/>' +
       '<input id="numeric-input" data-bind="value: integerField"/>' +
       '<input id="no-numbers-input" data-bind="value: noNumbersField"/>' +
-      '<input id="min-length-input" data-bind="value: minLengthField"/>' +
       '<input id="short-input" data-bind="value: shortField"/>' +
       '<input id="range-input" data-bind="value: rangeField"/>' +
       '<input id="regex-input" data-bind="value: regexField"/>' +
@@ -54,9 +53,6 @@ describe('ko validation integration', function () {
       }),
       shortField: ko.observable('').extend({
         'maxLength': [ 8, 'Must be short.' ]
-      }),
-      minLengthField: ko.observable('').extend({
-        'minLength': [ 5, 'Must be long.' ]
       }),
       rangeField: ko.observable('').extend({
         'range': [ 10, 100, 'Must be between 10 and 100.' ]
@@ -122,20 +118,6 @@ describe('ko validation integration', function () {
       $('#equal-to-field-input').val('bar').trigger('change');
 
       expect(viewModel.equalToField).not.toBeValid();
-    });
-  });
-
-  describe('min length field validator', function () {
-    it('is valid when length in greather than the min length', function () {
-      $('#min-length-input').val('foobar').trigger('change');
-
-      expect(viewModel.minLengthField).toBeValid();
-    });
-
-    it('is not valid when value length is smaller than min length', function () {
-      $('#min-length-input').val('foo').trigger('change');
-
-      expect(viewModel.minLengthField).not.toBeValid();
     });
   });
 
