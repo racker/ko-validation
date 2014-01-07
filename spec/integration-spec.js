@@ -53,7 +53,7 @@ describe('ko validation integration', function () {
         'invalidChars': [ '1234567890'.split(''), 'Must not have numbers.' ]
       }),
       shortField: ko.observable('').extend({
-        'length': [ 'Short', 8 ]
+        'length': [ 8, 'Must be short.' ]
       }),
       minLengthField: ko.observable('').extend({
         'minLength': ['Min Length', 5]

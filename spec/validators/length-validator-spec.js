@@ -2,7 +2,7 @@ describe('ko.validators.lengthValidator', function() {
   var validator, result;
 
   beforeEach(function() {
-    validator = ko.validators.lengthValidator('Field', 5);
+    validator = ko.validators.lengthValidator(5, 'Cannot be longer than 5 characters.');
   });
 
   it('should pass if the length is in the limit', function() {
@@ -22,7 +22,7 @@ describe('ko.validators.lengthValidator', function() {
 
   it('should have correct message on failure', function() {
     result = validator.validate('foo-bar');
-    expect(result.message).toBe('Field cannot be longer than 5 characters.');
+    expect(result.message).toBe('Cannot be longer than 5 characters.');
   });
 });
 
