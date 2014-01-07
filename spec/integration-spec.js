@@ -38,7 +38,7 @@ describe('ko validation integration', function () {
         'equalToFieldValue': [ 'Equal value', 'equal-to-input', 'Must be equal to the other.' ]
       }),
       greaterThanField: ko.observable('').extend({
-        'greaterThan': [ 'Big number', 42 ]
+        'greaterThan': [ 42, 'Must be greater than 42.' ]
       }),
       greaterThanOrEqualField: ko.observable('').extend({
         'greaterThanOrEqualToFieldValue': [ 'greater-than-input', 'Must be greater than that.' ]
