@@ -1,4 +1,4 @@
-ko.validators.equalToFieldValueValidator = function (otherFieldName, otherFieldId, message) {
+ko.validators.equalToFieldValueValidator = function (otherFieldId, message) {
   var utils = ko.validators.utilities;
 
   return ko.validators.customValidatorWithMessage(

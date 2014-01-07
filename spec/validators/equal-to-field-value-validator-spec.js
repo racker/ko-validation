@@ -7,7 +7,6 @@ describe('ko.validators.equalToFieldValueValidator', function () {
     otherField.val('foo');
 
     validator = ko.validators.equalToFieldValueValidator(
-      'OtherFieldName',
       'otherField',
       'This must be equal to that'
     );
