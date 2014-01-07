@@ -2,7 +2,7 @@ describe('ko.validators.minLengthValidator', function() {
   var validator, result;
 
   beforeEach(function() {
-    validator = ko.validators.minLengthValidator('Field', 3);
+    validator = ko.validators.minLengthValidator(3, 'Must contain at least 3 characters.');
   });
 
   it('should pass if the length is exactly the limit', function() {
@@ -22,6 +22,6 @@ describe('ko.validators.minLengthValidator', function() {
 
   it('should have correct message on failure', function() {
     result = validator.validate('no');
-    expect(result.message).toBe('Field must contain at least 3 characters.');
+    expect(result.message).toBe('Must contain at least 3 characters.');
   });
 });

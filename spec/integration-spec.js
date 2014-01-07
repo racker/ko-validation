@@ -56,7 +56,7 @@ describe('ko validation integration', function () {
         'maxLength': [ 8, 'Must be short.' ]
       }),
       minLengthField: ko.observable('').extend({
-        'minLength': ['Min Length', 5]
+        'minLength': [ 5, 'Must be long.' ]
       }),
       rangeField: ko.observable('').extend({
         'range': [ 'Ranged', 10, 100 ]
