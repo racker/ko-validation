@@ -2,7 +2,7 @@ describe('ko.validators.requiredValidator', function () {
   var validator, result;
 
   beforeEach(function () {
-    validator = ko.validators.requiredValidator('Field Name');
+    validator = ko.validators.requiredValidator('Field Name is required.');
   });
 
   it('is invalid for empty string', function () {
@@ -63,14 +63,5 @@ describe('ko.validators.requiredValidator', function () {
   it('is valid if not empty', function() {
     result = validator.validate('value');
     expect(result).toEqual({ isValid: true });
-  });
-
-  it('provides a custom message if specified', function() {
-    validator = ko.validators.requiredValidator('this_will_be_ignored', 'Plz provide a value.');
-    result = validator.validate('');
-    expect(result).toEqual({
-      isValid: false,
-      message: 'Plz provide a value.'
-    });
   });
 });

@@ -31,7 +31,7 @@ describe('ko validation integration', function () {
 
     viewModel = {
       requiredField: ko.observable('').extend({
-        'required': ['First Name']
+        'required': ['First Name is required.']
       }),
       equalField: ko.observable(''),
       equalToField: ko.observable('').extend({

@@ -3,8 +3,8 @@ describe('View Model with validatable observables', function () {
 
   beforeEach(function () {
     viewModel = {
-      'name': ko.observable().extend({ 'required': ['Name'] }),
-      'age': ko.observable().extend({ 'required': ['Age'] })
+      'name': ko.observable().extend({ 'required': ['Name is required.'] }),
+      'age': ko.observable().extend({ 'required': ['Age is required.'] })
     };
 
     setFixtures(
