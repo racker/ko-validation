@@ -6,7 +6,7 @@ ko.validators.integerValidator = function (message) {
 };
 
 ko.validators.customIntegerValidator = function (operation, message) {
-  return ko.validators.customValidatorWithMessage(
+  return ko.validators.validatorWithMessage(
     function (value) {
       return ko.validators.utilities.isInteger(value) && operation(parseInt(value, 10));
     },

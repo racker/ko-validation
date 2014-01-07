@@ -1,5 +1,5 @@
 ko.validators.lengthValidator = function (operation, message) {
-  return ko.validators.customValidatorWithMessage(
+  return ko.validators.validatorWithMessage(
     function (value) {
       return operation(value.toString().trim().length);
     },
