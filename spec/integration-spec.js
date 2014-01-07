@@ -47,7 +47,7 @@ describe('ko validation integration', function () {
         'lessThanOrEqualToFieldValue': [ 'greater-than-input', 'Must be less than that.' ]
       }),
       integerField: ko.observable('').extend({
-        'integer': [ 'A number' ]
+        'integer': [ 'Must be number' ]
       }),
       noNumbersField: ko.observable('').extend({
         'invalidChars': [ 'No numbers', '1234567890'.split('') ]

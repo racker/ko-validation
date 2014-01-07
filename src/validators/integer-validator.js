@@ -1,12 +1,7 @@
-ko.validators.integerValidator = function (fieldName) {
-  var utils = ko.validators.utilities;
-
+ko.validators.integerValidator = function (message) {
   return ko.validators.customValidatorWithMessage(
-    utils.isInteger,
-    utils.buildString(
-      '{$field} must be a number.',
-      { 'field': fieldName }
-    )
+    ko.validators.utilities.isInteger,
+    message
   );
 };
 
