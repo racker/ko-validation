@@ -5,7 +5,7 @@ ko.validators.integerValidator = function (message) {
   );
 };
 
-ko.validators.customIntegerValidator = function (operation, message) {
+ko.validators.integerValueValidator = function (operation, message) {
   return ko.validators.validatorWithMessage(
     function (value) {
       return ko.validators.utilities.isInteger(value) && operation(parseInt(value, 10));
@@ -15,7 +15,7 @@ ko.validators.customIntegerValidator = function (operation, message) {
 };
 
 ko.validators.greaterThanValueValidator = function (minimum, message) {
-  return ko.validators.customIntegerValidator(
+  return ko.validators.integerValueValidator(
     ko.func.operators.greaterThan(minimum),
     message
   );
@@ -26,7 +26,7 @@ ko.validators.rangeValidator = function (min, max, message) {
   op = ko.func.operators;
   utils = ko.validators.utilities;
 
-  return ko.validators.customIntegerValidator(
+  return ko.validators.integerValueValidator(
     op.range(min, max),
     message
   );
