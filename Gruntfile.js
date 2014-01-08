@@ -61,7 +61,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('predist', 'Clears old files on the dist folder.', function () {
+  grunt.registerTask('clean', 'Clears old files on the dist folder.', function () {
     var done = this.async();
     var exec = require('child_process').exec
 
@@ -74,5 +74,5 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', ['karma:all', 'watch']);
-  grunt.registerTask('dist', ['predist', 'concat:dist', 'uglify:dist']);
+  grunt.registerTask('dist', ['clean', 'concat:dist', 'uglify:dist']);
 };
