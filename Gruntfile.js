@@ -13,6 +13,7 @@ module.exports = function(grunt) {
         browsers: ['Chrome', 'Firefox']
       },
       ci: {
+        configFile: 'karma-ci.conf.js',
         singleRun: true,
         browsers: ['PhantomJS']
       },
@@ -29,6 +30,7 @@ module.exports = function(grunt) {
         src: [
           'src/namespaces.js',
           'src/validators/**/*.js',
+          'src/operators.js',
           'src/ko-validation.js',
           'src/validators-registry.js'
         ],
@@ -74,5 +76,6 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', ['karma:all', 'watch']);
+  grunt.registerTask('ci', ['dist', 'karma:ci']);
   grunt.registerTask('dist', ['clean', 'concat:dist', 'uglify:dist']);
 };
