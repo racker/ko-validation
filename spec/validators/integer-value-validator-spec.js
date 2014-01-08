@@ -1,6 +1,7 @@
 describe('ko.validators.integerValueValidator', function () {
   it('is not valid if value is not a number', function () {
-    var validator = ko.validators.integerValueValidator(null, 'Failed.');
+    var op = jasmine.createSpy('op').andReturn(true);
+    var validator = ko.validators.integerValueValidator(op, 'Failed.');
 
     expect(validator.validate('1number')).toEqual({
       isValid: false,
