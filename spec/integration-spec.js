@@ -18,6 +18,7 @@ describe('ko validation integration', function () {
       '<input id="min-length-input" data-bind="value: minLengthField"/>' +
       '<input id="short-input" data-bind="value: shortField"/>' +
       '<input id="range-input" data-bind="value: rangeField"/>' +
+      '<input id="length-range-input" data-bind="value: lengthRangeField"/>' +
       '<input id="regex-input" data-bind="value: regexField"/>' +
       '<input id="email-input" data-bind="value: emailField"/>' +
       '<input id="custom-input" data-bind="value: customField"/>' +
@@ -57,6 +58,9 @@ describe('ko validation integration', function () {
       }),
       minLengthField: ko.observable('').extend({
         'minLength': [ 5, 'Must be long.' ]
+      }),
+      lengthRangeField: ko.observable('').extend({
+        'lengthRange': [4, 10, 'Length range']
       }),
       rangeField: ko.observable('').extend({
         'range': [ 10, 100, 'Must be between 10 and 100.' ]
@@ -136,6 +140,26 @@ describe('ko validation integration', function () {
       $('#min-length-input').val('foo').trigger('change');
 
       expect(viewModel.minLengthField).not.toBeValid();
+    });
+  });
+
+  describe('length range field validator', function () {
+    it('is valid', function () {
+      $('#length-range-input').val('teststrng').trigger('change');
+
+      expect(viewModel.lengthRangeField).toBeValid();
+    });
+
+    it('is not valid when too short', function () {
+      $('#length-range-input').val('123').trigger('change');
+
+      expect(viewModel.lengthRangeField).not.toBeValid();
+    });
+
+    it('is not valid when too long', function () {
+      $('#length-range-input').val('veryveryveryverylong').trigger('change');
+
+      expect(viewModel.lengthRangeField).not.toBeValid();
     });
   });
 
