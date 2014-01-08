@@ -29,6 +29,7 @@ module.exports = function(grunt) {
         src: [
           'src/namespaces.js',
           'src/validators/**/*.js',
+          'src/operators.js',
           'src/ko-validation.js',
           'src/validators-registry.js'
         ],
