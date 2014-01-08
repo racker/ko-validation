@@ -5,7 +5,7 @@
   "main": "dist/ko-validation.js",
   "scripts": {
     "build": "grunt dist",
-    "test": "grunt karma:ci",
+    "test": "grunt ci",
     "prepublish": "(which grunt >/dev/null && grunt dist) || echo 'Warning: Failed to run `grunt dist`.'"
   },
   "repository": {
