@@ -5,7 +5,8 @@
   "main": "dist/ko-validation.js",
   "scripts": {
     "build": "grunt dist",
-    "test": "grunt karma:ci"
+    "test": "grunt karma:ci",
+    "prepublish": "rm dist/*.js ; grunt dist"
   },
   "repository": {
     "type": "git",
