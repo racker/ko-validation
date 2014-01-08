@@ -14,13 +14,6 @@ ko.validators.integerValueValidator = function (operation, message) {
   );
 };
 
-ko.validators.greaterThanValueValidator = function (minimum, message) {
-  return ko.validators.integerValueValidator(
-    ko.func.operators.greaterThan(minimum),
-    message
-  );
-};
-
 ko.validators.rangeValidator = function (min, max, message) {
   var op, utils;
   op = ko.func.operators;
