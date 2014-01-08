@@ -8,7 +8,7 @@ describe('ko.validators.integerValueValidator', function () {
     });
   });
 
-  it('is valid if value pass the operator', function () {
+  it('is valid if operator returns true with the value', function () {
     var op = jasmine.createSpy('op').andReturn(true);
     var validator = ko.validators.integerValueValidator(op);
 
@@ -16,7 +16,7 @@ describe('ko.validators.integerValueValidator', function () {
     expect(op).toHaveBeenCalledWith(777);
   });
 
-  it('is not valid if value does not pass the operator', function () {
+  it('is not valid if operator returns false with the value', function () {
     var op = jasmine.createSpy('op').andReturn(false);
     var validator = ko.validators.integerValueValidator(op, 'Not valid.');
 
