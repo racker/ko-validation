@@ -3,20 +3,20 @@ ko-validation [![Build Status](https://travis-ci.org/racker/ko-validation.png?br
 
 Knockout Validation Plugin for the Rackspace Control Panel.
 
-##Getting Started
+## Getting Started
 
 Just hook up validation to your knockout observables:
 
 View Model:
 ```javascript
 myViewModel = function () {
-  this['myField'] = ko.observable('defaultValue').extend({
-    'required': ['FieldName'], // will show the message "FieldName is required."
-    'length': ['FieldName', 30] // will show the message "FieldName cannot be longer than 30 characters."
+  this['name'] = ko.observable('John Doe').extend({
+    'required': ['Name is required.'], // will show the message "Name is required."
+    'maxLength': [30, 'Name cannot be longer than 30 characters.'] // the last item is the message that will be shown
   });
 
-  this['name'] = ko.observable().extend({
-    'required': ['', 'Please enter your name.'] // will show "Please enter your name."
+  this['phone'] = ko.observable().extend({
+    'regex': [/[0-9]/, 'Must contain numbers.']
   });
 };
 ```
@@ -24,34 +24,36 @@ myViewModel = function () {
 Template:
 ```html
 <div>
-  <input type="text" data-bind="value: myField">
+  <input type="text" data-bind="value: name">
+  <input type="text" data-bind="value: phone">
 </div>
 ```
 
 By default, the plugin will insert a span in the parent element of the input that is bound to that observable, and show the validation messages there.
 
-##Validation Rules
+## Validation Rules
 
 Currently the following rules are supported:
 
-* Greater Than `greaterThan`
-* Greater Than Or Equal To Field Value `greaterThanOrEqualToFieldValue`
-* Equal To Field Value `equalToFieldValue`
-* Less Than Or Equal To Field Value `lessThanOrEqualToFieldValue`
-* Invalid Charachters `invalidChars`
-* Length `length`
-* Min Length `minLength`
-* Range `range`
 * Required `required`
-* Required Only If `onlyIf`
+* Maximum Length `maxLength`
 * Integer `integer`
+* Range `range`
 * Regex `regex`
+* Email `email`
+* Invalid Charachters `invalidChars`
+* Required Only If `onlyIf`
 * Custom `custom`
 
+### Deprecated validators
+
+* Equal To Field Value `equalToFieldValue`
+* Greater Than Or Equal To Field Value `greaterThanOrEqualToFieldValue`
+* Less Than Or Equal To Field Value `lessThanOrEqualToFieldValue`
 
 Please refer to [integration specs for examples](https://github.com/racker/ko-validation/blob/master/spec/integration-spec.js)
 
-##Validating Computed Observables
+## Validating Computed Observables
 
 Sometimes we want to have multiple fields behave as a single field for validation purposes.
 
@@ -71,8 +73,8 @@ this['timeInMinutes'] = ko.computed(function () {
   return convertToMinutes(this['time'](), this['timeUnit']());
 }, this).extend({
   'validatesAfter': [this['time'], this['timeUnit']],
-  'required': ['Time'],
-  'range': ['Time', 0, (60 * 24), gettext('Cooldown must be between 0 minutes and 1 day.')]
+  'required': ['Time is required.'],
+  'range': [0, (60 * 24), 'Cooldown must be between 0 minutes and 1 day.']
 });
 ```
 
@@ -86,7 +88,7 @@ And, on the template:
 
 Notice the `validationAfter` extension passed to `timeInMinutes`. That means that observable will be validated after changes on both `time` and `timeUnit`, and the error message will be shown by the input fields associated to each of them.
 
-##Validating Checkboxes
+## Validating Checkboxes
 
 Validating that at least one checkbox is checked in a checkbox group is as easy as extending an observable array with the checkboxes values to be required.
 One problem that this solution could cause is that a validation message would be inserted after *each* checkbox.
@@ -95,7 +97,7 @@ To ensure only one validation message is inserted somewhere, use the `validation
 View Model:
 ```javascript
 this['reasonsToCancelAccount'] = ko.observableArray([]).extend({
-  'required': ['', 'Choose at least one please']
+  'required': ['Choose at least one please']
 });
 ```
 
@@ -122,3 +124,13 @@ After installing the dependencies with npm, run `grunt watch` to start the test 
 When submitting a pull request, do not forget to add unit tests, and if you are introducing a new validator, please also add integration tests for it.
 
 To create a new distribution file with a patch version, run `npm version patch -m "Upgrade to %s for reasons"` (with whatever is the most appropriate message), then run `grunt dist` to generate the minified concatenated dist file. You can then `npm publish` the new version to npm.
+
+## When creating a new version
+
+The rules are:
+
+- Follow [semantic versioning](http://semver.org/).
+- Create separate pull requests to create new versions. Don't put extra code change in those PRs.
+- Use `npm version [major | minor | patch]`. It creates a tagged commit with a proper change to `package.json`.
+- Don't foget to push a tag to github using `git push --tags`.
+- After the PR with the new version is merged, execute `rm dist/*.js`, `grunt dist`, and `npm publish`.
