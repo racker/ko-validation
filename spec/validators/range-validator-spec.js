@@ -35,7 +35,7 @@ describe('ko.validators.rangeValidator', function() {
     expect(result.isValid).toBe(false);
   });
 
-  it('should provide an empty error message when valid', function() {
+  it('should not provide error message when valid', function() {
     result = validator.validate(10);
     expect(result).toEqual({ isValid: true });
   });

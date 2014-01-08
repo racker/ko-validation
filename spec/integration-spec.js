@@ -9,13 +9,12 @@ describe('ko validation integration', function () {
       '<input id="required-input" data-bind="value: requiredField"/>' +
       '<input id="equal-to-input" data-bind="value: equalField"/>' +
       '<input id="equal-to-field-input" data-bind="value: equalToField"/>' +
-      '<input id="greater-than-input" data-bind="value: greaterThanField"/>' +
+      '<input id="greater-than-input"/>' +
       '<input id="greater-than-other-field-input" data-bind="value: greaterThanOrEqualField"/>' +
       '<input id="less-than-other-field-input" data-bind="value: lessThanOtherField"/>' +
       '<input id="sometimes-required-input" data-bind="value: sometimesRequired"/>' +
       '<input id="numeric-input" data-bind="value: integerField"/>' +
       '<input id="no-numbers-input" data-bind="value: noNumbersField"/>' +
-      '<input id="min-length-input" data-bind="value: minLengthField"/>' +
       '<input id="short-input" data-bind="value: shortField"/>' +
       '<input id="range-input" data-bind="value: rangeField"/>' +
       '<input id="regex-input" data-bind="value: regexField"/>' +
@@ -37,9 +36,6 @@ describe('ko validation integration', function () {
       equalToField: ko.observable('').extend({
         'equalToFieldValue': [ 'equal-to-input', 'Must be equal to the other.' ]
       }),
-      greaterThanField: ko.observable('').extend({
-        'greaterThan': [ 42, 'Must be greater than 42.' ]
-      }),
       greaterThanOrEqualField: ko.observable('').extend({
         'greaterThanOrEqualToFieldValue': [ 'greater-than-input', 'Must be greater than that.' ]
       }),
@@ -54,9 +50,6 @@ describe('ko validation integration', function () {
       }),
       shortField: ko.observable('').extend({
         'maxLength': [ 8, 'Must be short.' ]
-      }),
-      minLengthField: ko.observable('').extend({
-        'minLength': [ 5, 'Must be long.' ]
       }),
       rangeField: ko.observable('').extend({
         'range': [ 10, 100, 'Must be between 10 and 100.' ]
@@ -122,34 +115,6 @@ describe('ko validation integration', function () {
       $('#equal-to-field-input').val('bar').trigger('change');
 
       expect(viewModel.equalToField).not.toBeValid();
-    });
-  });
-
-  describe('min length field validator', function () {
-    it('is valid when length in greather than the min length', function () {
-      $('#min-length-input').val('foobar').trigger('change');
-
-      expect(viewModel.minLengthField).toBeValid();
-    });
-
-    it('is not valid when value length is smaller than min length', function () {
-      $('#min-length-input').val('foo').trigger('change');
-
-      expect(viewModel.minLengthField).not.toBeValid();
-    });
-  });
-
-  describe('for greater than validator', function () {
-    it('is invalid', function () {
-      $('#greater-than-input').val(42).trigger('change');
-
-      expect(viewModel.greaterThanField).not.toBeValid();
-    });
-
-    it('is valid', function () {
-      $('#greater-than-input').val(43).trigger('change');
-
-      expect(viewModel.greaterThanField).toBeValid();
     });
   });
 
