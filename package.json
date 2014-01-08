@@ -6,7 +6,7 @@
   "scripts": {
     "build": "grunt dist",
     "test": "grunt karma:ci",
-    "prepublish": "rm dist/*.js ; grunt dist"
+    "prepublish": "grunt dist"
   },
   "repository": {
     "type": "git",
