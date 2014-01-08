@@ -1,11 +1,12 @@
 {
   "name": "ko-validation",
-  "version": "0.2.0",
-  "description": "Knockout Validation Plugin for the Rackspace Control Panel",
+  "version": "1.0.0",
+  "description": "Knockout Validation Plugin (used by the Rackspace Control Panel)",
   "main": "dist/ko-validation.js",
   "scripts": {
     "build": "grunt dist",
-    "test": "grunt karma:ci"
+    "test": "grunt karma:ci",
+    "prepublish": "(which grunt >/dev/null && grunt dist) || echo 'Warning: Failed to run `grunt dist`.'"
   },
   "repository": {
     "type": "git",
