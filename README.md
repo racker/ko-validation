@@ -134,3 +134,4 @@ The rules are:
 - Use `npm version [major | minor | patch]`. It creates a tagged commit with a proper change to `package.json`.
 - Don't foget to push a tag to github using `git push --tags`.
 - After the PR with the new version is merged, execute `npm publish` on the master branch.
+
