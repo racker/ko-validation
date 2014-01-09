@@ -55,25 +55,15 @@ module.exports = function(grunt) {
         files: ['src/**/*.js', 'spec/**/*.js'],
         tasks: ['karma:all:run']
       }
-    }
+    },
+    clean: ['dist/**/*.*']
   });
 
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-
-  grunt.registerTask('clean', 'Clears old files on the dist folder.', function () {
-    var done = this.async();
-    var exec = require('child_process').exec
-
-    exec('rm -rf ' + __dirname + '/dist/', function (err, stdout, stderr) {
-      err && console.log(err);
-      stdout && console.log('stdout:', stdout);
-      stderr && console.log('stderr:', stderr);
-      done(!err);
-    });
-  });
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.registerTask('default', ['karma:all', 'watch']);
   grunt.registerTask('ci', ['dist', 'karma:ci']);
