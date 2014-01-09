@@ -170,6 +170,15 @@ ko.validation.registerValidator = function (name, validatorFactory) {
     return observable;
   };
 
+  ko.extenders['validates'] = function (observable, param) {
+    ko.utils.arrayForEach(param, function (dependencyObservable) {
+      observable.subscribe(function () {
+        ko.validation.utils.runValidations(dependencyObservable);
+      })
+    });
+    return observable;
+  };
+
   ko.bindingHandlers['validationMessage'] = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
       var observable = valueAccessor();
