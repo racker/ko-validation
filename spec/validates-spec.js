@@ -8,7 +8,7 @@ describe('validation using the "validates" utility', function () {
       'onlyIf': [viewModel.checkFirstName, { 'required': [ 'First name' ] }]
     });
     viewModel.lastName = ko.observable('hijlkmno').extend({
-      'minLength': ['Min Length', 5],
+      'maxLength': ['Max Length', 5],
       'validates': [viewModel.firstName]
     });
 
