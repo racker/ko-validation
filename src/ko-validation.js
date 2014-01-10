@@ -163,9 +163,9 @@ ko.validation.registerValidator = function (name, validatorFactory) {
   }
 
   ko.extenders['validatesAfter'] = function (observable, dependentObservables) {
-    ko.utils.arrayForEach(dependentObservables, function (dependentObservables) {
-      dependentObservables.__validates__ = dependentObservables.__validates__ || [];
-      dependentObservables.__validates__.push(observable);
+    ko.utils.arrayForEach(dependentObservables, function (dependentObservable) {
+      dependentObservable.__validates__ = dependentObservable.__validates__ || [];
+      dependentObservable.__validates__.push(observable);
     });
     return observable;
   };
