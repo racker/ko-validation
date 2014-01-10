@@ -162,10 +162,19 @@ ko.validation.registerValidator = function (name, validatorFactory) {
     ko.bindingHandlers.text.update(element, observable.validationMessage);
   }
 
-  ko.extenders['validatesAfter'] = function (observable, param) {
-    ko.utils.arrayForEach(param, function (dependencyObservable) {
-      dependencyObservable.__validates__ = dependencyObservable.__validates__ || [];
-      dependencyObservable.__validates__.push(observable);
+  ko.extenders['validatesAfter'] = function (observable, dependentObservables) {
+    ko.utils.arrayForEach(dependentObservables, function (dependentObservable) {
+      dependentObservable.__validates__ = dependentObservable.__validates__ || [];
+      dependentObservable.__validates__.push(observable);
+    });
+    return observable;
+  };
+
+  ko.extenders['validates'] = function (observable, dependentObservables) {
+    ko.utils.arrayForEach(dependentObservables, function (dependentObservable) {
+      observable.subscribe(function () {
+        ko.validation.utils.runValidations(dependentObservable);
+      })
     });
     return observable;
   };
