@@ -97,8 +97,8 @@ The `validates` extension allows you to indicate fields that should be validated
 this['field1'] = ko.observable(1).extend({
   'range': [1, 10, 'Must be between 1 and 10']
 });
-this['field1'] = ko.observable(2).extend({
-  'validates': [this['minimumValue']]
+this['field2'] = ko.observable(2).extend({
+  'validates': [this['field1']]
 });
 ```
 
