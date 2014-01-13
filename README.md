@@ -88,6 +88,20 @@ And, on the template:
 
 Notice the `validationAfter` extension passed to `timeInMinutes`. That means that observable will be validated after changes on both `time` and `timeUnit`, and the error message will be shown by the input fields associated to each of them.
 
+## Validating Related Fields
+
+In some cases, the validation for one field may depend on the value of another field. For example, one field might only be required if another field has a particular value. For fields like this, the validation should be re-run whenever either field changes.
+The `validates` extension allows you to indicate fields that should be validated whenever the given observable is changed. In the example below, the range validator on field1 will be run again whenever the value of field2 is changed:
+
+```javascript
+this['field1'] = ko.observable(1).extend({
+  'range': [1, 10, 'Must be between 1 and 10']
+});
+this['field1'] = ko.observable(2).extend({
+  'validates': [this['minimumValue']]
+});
+```
+
 ## Validating Checkboxes
 
 Validating that at least one checkbox is checked in a checkbox group is as easy as extending an observable array with the checkboxes values to be required.
