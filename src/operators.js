@@ -35,8 +35,8 @@ ko.func.operators = (function () {
     return function (value) {
       return self.greaterThanOrEqualTo(minimum)(value)
           && self.lessThanOrEqualTo(maximum)(value);
-    }
+    };
   };
 
   return self;
-}) ();
+}());
