@@ -12,11 +12,11 @@ describe('Validation message element', function () {
 
   describe('when a custom validation element is not specified', function () {
     beforeEach(function () {
-      setFixtures(
-        '<div id="parent">' +
-          '<input id="firstName" data-bind="value: firstName"/>' +
-        '</div>'
-      );
+      var html;
+      html = '<div id="parent">' +
+        '<input id="firstName" data-bind="value: firstName"/>' +
+        '</div>';
+      setFixtures(html);
 
       ko.applyBindings(viewModel, $('#parent')[0]);
     });
@@ -55,18 +55,16 @@ describe('Validation message element', function () {
     });
   });
 
-  describe('when a custom validation element is specified', function() {
+  describe('when a custom validation element is specified', function () {
     var messageElement;
 
     beforeEach(function () {
-      setFixtures(
-        '<div id="parent">' +
-          '<div>' +
-            '<input id="firstName" data-bind="value: firstName"/>' +
-          '</div>' +
-          '<span id="messageElement" data-bind="validationMessage: firstName"></span>' +
-        '</div>'
-      );
+      var html;
+      html = '<div id="parent">' +
+        '<div><input id="firstName" data-bind="value: firstName"/></div>' +
+        '<span id="messageElement" data-bind="validationMessage: firstName"></span>' +
+        '</div>';
+      setFixtures(html);
 
       ko.applyBindings(viewModel, $('#parent')[0]);
 

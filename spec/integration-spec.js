@@ -2,10 +2,9 @@ describe('ko validation integration', function () {
   var viewModel;
 
   beforeEach(function () {
-    var customValidatorContext, customValidatorFunction;
+    var customValidatorContext, customValidatorFunction, html;
 
-    setFixtures(
-      '<div id="parent">' +
+    html = '<div id="parent">' +
       '<input id="required-input" data-bind="value: requiredField"/>' +
       '<input id="equal-to-input" data-bind="value: equalField"/>' +
       '<input id="equal-to-field-input" data-bind="value: equalToField"/>' +
@@ -20,12 +19,13 @@ describe('ko validation integration', function () {
       '<input id="regex-input" data-bind="value: regexField"/>' +
       '<input id="email-input" data-bind="value: emailField"/>' +
       '<input id="custom-input" data-bind="value: customField"/>' +
-      '</div>'
-    );
+      '</div>';
+
+    setFixtures(html);
 
     customValidatorContext = { toTest: 'foo' };
     customValidatorFunction = function (value) {
-      return { isValid: value === this.toTest, message: '' }
+      return { isValid: value === this.toTest, message: '' };
     };
 
     viewModel = {
@@ -46,7 +46,7 @@ describe('ko validation integration', function () {
         'integer': [ 'Must be number' ]
       }),
       noNumbersField: ko.observable('').extend({
-        'invalidChars': [ '1234567890'.split(''), 'Must not have numbers.' ]
+        'invalidChars': [ String.prototype.split.call(['1234567890'], ''), 'Must not have numbers.' ]
       }),
       shortField: ko.observable('').extend({
         'maxLength': [ 8, 'Must be short.' ]
@@ -65,7 +65,8 @@ describe('ko validation integration', function () {
       }),
       isItRequired: ko.observable(true)
     };
-    viewModel['sometimesRequired'] = ko.observable('').extend({
+
+    viewModel.sometimesRequired = ko.observable('').extend({
       'onlyIf': [viewModel.isItRequired, { 'required': [ 'Sometimes' ] }]
     });
 

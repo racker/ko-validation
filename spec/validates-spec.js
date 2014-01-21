@@ -2,8 +2,10 @@ describe('validation using the "validates" utility', function () {
   var viewModel, checkFirstName;
 
   beforeEach(function () {
+    var html;
+
     viewModel = {};
-    viewModel.checkFirstName = function () {return checkFirstName}
+    viewModel.checkFirstName = function () { return checkFirstName; };
     viewModel.firstName = ko.observable('abcdefg').extend({
       'onlyIf': [viewModel.checkFirstName, { 'required': [ 'First name' ] }]
     });
@@ -11,12 +13,12 @@ describe('validation using the "validates" utility', function () {
       'validates': [viewModel.firstName]
     });
 
-    setFixtures(
-      '<div id="parent">' +
-        '<input id="firstName" data-bind="value: firstName"/>' +
-        '<input id="lastName" data-bind="value: lastName"/>' +
-      '</div>'
-    );
+    html = '<div id="parent">' +
+      '<input id="firstName" data-bind="value: firstName"/>' +
+      '<input id="lastName" data-bind="value: lastName"/>' +
+      '</div>';
+
+    setFixtures(html);
 
     ko.applyBindings(viewModel, $('#parent')[0]);
   });

@@ -1,5 +1,4 @@
 describe('observables validation', function () {
-  var validator;
 
   it('allows registering validators', function () {
     var validatorType, validator, observable;
@@ -98,7 +97,7 @@ describe('observables validation', function () {
             return {
               isValid: value > greaterThanValue,
               message: message
-            }
+            };
           }
         };
       };

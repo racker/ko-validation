@@ -1,7 +1,7 @@
 describe('ko.validators.integerValidator', function () {
   var validator;
 
-  beforeEach(function() {
+  beforeEach(function () {
     validator = ko.validators.integerValidator('Must be a number.');
   });
 

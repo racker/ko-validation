@@ -12,8 +12,8 @@
 
   ko.validation.registerValidator('onlyIf', ko.validators.onlyIfValidator);
 
-  ko.validation.registerValidator('equalToFieldValue', ko.validators.equalToFieldValueValidator),
+  ko.validation.registerValidator('equalToFieldValue', ko.validators.equalToFieldValueValidator);
   ko.validation.registerValidator('greaterThanOrEqualToFieldValue', ko.validators.greaterThanOrEqualToFieldValueValidator);
   ko.validation.registerValidator('lessThanOrEqualToFieldValue', ko.validators.lessThanOrEqualToFieldValueValidator);
-}) ();
+}());
 

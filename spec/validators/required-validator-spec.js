@@ -13,7 +13,7 @@ describe('ko.validators.requiredValidator', function () {
     });
   });
 
-  it('is invalid if null', function() {
+  it('is invalid if null', function () {
     result = validator.validate(null);
     expect(result).toEqual({
       isValid: false,
@@ -21,7 +21,7 @@ describe('ko.validators.requiredValidator', function () {
     });
   });
 
-  it('is invalid if undefined', function() {
+  it('is invalid if undefined', function () {
     result = validator.validate(undefined);
     expect(result).toEqual({
       isValid: false,
@@ -29,7 +29,7 @@ describe('ko.validators.requiredValidator', function () {
     });
   });
 
-  it('is invalid if false', function() {
+  it('is invalid if false', function () {
     result = validator.validate(false);
     expect(result).toEqual({
       isValid: false,
@@ -37,7 +37,7 @@ describe('ko.validators.requiredValidator', function () {
     });
   });
 
-  it('is invalid if empty array', function() {
+  it('is invalid if empty array', function () {
     result = validator.validate([]);
     expect(result).toEqual({
       isValid: false,
@@ -60,7 +60,7 @@ describe('ko.validators.requiredValidator', function () {
     expect(result).toEqual({ isValid: true });
   });
 
-  it('is valid if not empty', function() {
+  it('is valid if not empty', function () {
     result = validator.validate('value');
     expect(result).toEqual({ isValid: true });
   });
