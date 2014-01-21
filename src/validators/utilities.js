@@ -59,15 +59,18 @@ ko.validators.utilities = (function () {
     if (!type || !type.toLowerCase) { return null; }
 
     switch (type.toLowerCase()) {
-    case 'checkbox':
-    case 'radio':
-      return element.checked ? element.value : null;
-    case 'select-one':
-      return getSelectSingleValue(element);
-    case 'select-multiple':
-      return getSelectMultipleValue(element);
-    default:
-      return element.value || null;
+
+      case 'checkbox':
+      case 'radio':
+        return element.checked ? element.value : null;
+      case 'select-one':
+        return getSelectSingleValue(element);
+      case 'select-multiple':
+        return getSelectMultipleValue(element);
+      case 'hidden':
+        return element.value || null;
+      default:
+        return (element.value !== undefined) ? element.value : '';
     }
   };
 
