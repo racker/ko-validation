@@ -11,7 +11,7 @@ ko.validators.utilities = (function () {
     values = [];
     options = element.options;
 
-    for (i in options) {
+    for (i = 0; i < options.length; i++) {
       if (options.hasOwnProperty(i)) {
 
         option = options[i];
