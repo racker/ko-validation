@@ -171,13 +171,13 @@ describe('ko.validation.utilities', function () {
 
     describe('for single select lists', function () {
       beforeEach(function () {
-        setFixtures(
-          '<select id="test-select">' +
-            '<option value="option1">Option1</option>' +
-            '<option value="option2">Option2</option>' +
-            '<option value="option3">Option3</option>' +
-          '</select>'
-        );
+        var html;
+        html = '<select id="test-select">' +
+          '<option value="option1">Option1</option>' +
+          '<option value="option2">Option2</option>' +
+          '<option value="option3">Option3</option>' +
+          '</select>';
+        setFixtures(html);
       });
 
       it('gets the list selected value when one is selected', function () {
@@ -193,13 +193,13 @@ describe('ko.validation.utilities', function () {
 
     describe('for multiple select lists', function () {
       beforeEach(function () {
-        setFixtures(
-          '<select id="test-select" multiple>' +
-            '<option value="option1" id="option1">Option1</option>' +
-            '<option value="option2" id="option2">Option2</option>' +
-            '<option value="option3" id="option3">Option3</option>' +
-          '</select>'
-        );
+        var html;
+        html = '<select id="test-select" multiple>' +
+          '<option value="option1" id="option1">Option1</option>' +
+          '<option value="option2" id="option2">Option2</option>' +
+          '<option value="option3" id="option3">Option3</option>' +
+          '</select>';
+        setFixtures(html);
       });
 
       it('gets the list of selected values when at least one is selected', function () {
