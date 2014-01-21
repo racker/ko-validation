@@ -53,7 +53,7 @@ module.exports = function(grunt) {
     watch: {
       tests: {
         files: ['src/**/*.js', 'spec/**/*.js'],
-        tasks: ['karma:all:run']
+        tasks: ['karma:all:run', 'jslint:all']
       }
     },
     clean: ['dist/**/*.*'],
@@ -80,6 +80,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.registerTask('default', ['karma:all', 'watch']);
-  grunt.registerTask('ci', ['dist', 'karma:ci']);
+  grunt.registerTask('ci', ['jslint:all', 'dist', 'karma:ci']);
   grunt.registerTask('dist', ['clean', 'concat:dist', 'uglify:dist']);
 };
