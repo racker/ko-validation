@@ -66,8 +66,10 @@ ko.validators.utilities = (function () {
       return getSelectSingleValue(element);
     case 'select-multiple':
       return getSelectMultipleValue(element);
-    default:
+    case 'hidden':
       return element.value || null;
+    default:
+      return (element.value !== undefined) ? element.value : '';
     }
   };
 

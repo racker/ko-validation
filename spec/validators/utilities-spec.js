@@ -127,9 +127,10 @@ describe('ko.validation.utilities', function () {
         expect(utilities.getValue($('#test-input')[0])).toBe('x-wing');
       });
 
-      it('returns null when no value is set', function () {
+      it('returns empty string when the input has no text', function () {
         setFixtures('<input type="text" value="" id="test-input"/>');
-        expect(utilities.getValue($('#test-input')[0])).toBe(null);
+        $('#test-input').val('');
+        expect(utilities.getValue($('#test-input')[0])).toBe('');
       });
     });
 
