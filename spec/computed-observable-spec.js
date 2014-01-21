@@ -2,6 +2,8 @@ describe('Computed observable validation', function () {
   var viewModel;
 
   beforeEach(function () {
+    var html;
+
     viewModel = {};
     viewModel.firstName = ko.observable('');
     viewModel.lastName = ko.observable('');
@@ -15,12 +17,12 @@ describe('Computed observable validation', function () {
       'required': ['Full Name is required.']
     });
 
-    setFixtures(
-      '<div id="parent">' +
-        '<input id="firstName" data-bind="value: firstName"/>' +
-        '<input id="lastName" data-bind="value: lastName"/>' +
-      '</div>'
-    );
+    html = '<div id="parent">' +
+      '<input id="firstName" data-bind="value: firstName"/>' +
+      '<input id="lastName" data-bind="value: lastName"/>' +
+      '</div>';
+
+    setFixtures(html);
 
     ko.applyBindings(viewModel, $('#parent')[0]);
   });
