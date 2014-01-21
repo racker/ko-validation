@@ -6,21 +6,16 @@ ko.validators.utilities = (function () {
   }
 
   function getSelectMultipleValue(element) {
-    var values, options, option, i;
+    var values;
 
-    values = [];
-    options = element.options;
+    values = ko.utils.arrayFilter(element.options, function (option) {
+      return option.selected;
+    });
 
-    for (i = 0; i < options.length; i++) {
-      if (options.hasOwnProperty(i)) {
+    values = ko.utils.arrayMap(values, function (option) {
+      return option.value;
+    });
 
-        option = options[i];
-
-        if (option.selected) {
-          values.push(option.value);
-        }
-      }
-    }
     return values.length ? values : null;
   }
 
@@ -80,15 +75,7 @@ ko.validators.utilities = (function () {
     return self.getValue(document.getElementById(elementId));
   };
 
-  self.objectForEach = function (object, callback) {
-    var key;
-
-    for (key in object) {
-      if (object.hasOwnProperty(key)) {
-        callback(object[key], key);
-      }
-    }
-  };
+  self.objectForEach = ko.utils.objectForEach;
 
   self.makeFunction = function (value) {
     return self.isFunction(value) ? value : self.identity.bind(self, value);
