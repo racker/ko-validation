@@ -56,10 +56,24 @@ module.exports = function(grunt) {
         tasks: ['karma:all:run']
       }
     },
-    clean: ['dist/**/*.*']
+    clean: ['dist/**/*.*'],
+    jslint: {
+      all: {
+        src: ['src/**/*.js', 'spec/**/*.js'],
+        directives: {
+          browser: true,
+          indent: 2,
+          sloppy: true,
+          nomen: true,
+          plusplus: true,
+          predef: [ 'ko', 'jasmine', 'expect', 'describe', 'it', 'spyOn', 'beforeEach', 'afterEach', 'jQuery', '$', 'setFixtures' ]
+        }
+      }
+    }
   });
 
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-jslint')
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
