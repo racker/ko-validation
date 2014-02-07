@@ -104,28 +104,6 @@ ko.validation.registerValidator = function (name, validatorFactory) {
     return validationElement;
   }
 
-  function addValidateToViewModel(viewModel) {
-    if (!viewModel) {
-      return;
-    }
-    viewModel.validate = viewModel.validate || function () {
-      var propertyName, observable, valid;
-
-      valid = true;
-      for (propertyName in viewModel) {
-        if (viewModel.hasOwnProperty(propertyName)) {
-          observable = viewModel[propertyName];
-          if (ko.validation.utils.hasValidators(observable)) {
-            ko.validation.utils.runValidations(observable);
-            valid = observable.isValid() && valid;
-          }
-        }
-      }
-
-      return valid;
-    };
-  }
-
   function bindEventListenerToRunValidation(element, observableToValidate) {
     var elementType, eventName;
 
@@ -224,7 +202,7 @@ ko.validation.registerValidator = function (name, validatorFactory) {
           });
         }
 
-        addValidateToViewModel(viewModel);
+        ko.validation.utils.addValidateToViewModel(viewModel);
       }
 
       return originalReturn;
