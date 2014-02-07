@@ -59,6 +59,28 @@ ko.validation.utils = (function () {
     }
   };
 
+  self.addValidateToViewModel = function (viewModel) {
+    if (!viewModel) {
+      return;
+    }
+    viewModel.validate = viewModel.validate || function () {
+      var propertyName, observable, valid;
+
+      valid = true;
+      for (propertyName in viewModel) {
+        if (viewModel.hasOwnProperty(propertyName)) {
+          observable = viewModel[propertyName];
+          if (self.hasValidators(observable)) {
+            self.runValidations(observable);
+            valid = observable.isValid() && valid;
+          }
+        }
+      }
+
+      return valid;
+    };
+  };
+
   return self;
 }());
 

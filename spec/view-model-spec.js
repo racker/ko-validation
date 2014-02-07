@@ -38,7 +38,7 @@ describe('View Model with validatable observables', function () {
 
   describe('when view model get validation added to it', function () {
     beforeEach(function () {
-      ko.validation.util.addValidateToViewModel(viewModel);
+      ko.validation.utils.addValidateToViewModel(viewModel);
     });
 
     it('has a "validate" method added to it', function () {
