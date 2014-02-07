@@ -59,6 +59,28 @@ ko.validation.utils = (function () {
     }
   };
 
+  self.addValidateToViewModel = function (viewModel) {
+    if (!viewModel) {
+      return;
+    }
+    viewModel.validate = viewModel.validate || function () {
+      var propertyName, observable, valid;
+
+      valid = true;
+      for (propertyName in viewModel) {
+        if (viewModel.hasOwnProperty(propertyName)) {
+          observable = viewModel[propertyName];
+          if (self.hasValidators(observable)) {
+            self.runValidations(observable);
+            valid = observable.isValid() && valid;
+          }
+        }
+      }
+
+      return valid;
+    };
+  };
+
   return self;
 }());
 
@@ -102,28 +124,6 @@ ko.validation.registerValidator = function (name, validatorFactory) {
       element.appendChild(validationElement);
     }
     return validationElement;
-  }
-
-  function addValidateToViewModel(viewModel) {
-    if (!viewModel) {
-      return;
-    }
-    viewModel.validate = viewModel.validate || function () {
-      var propertyName, observable, valid;
-
-      valid = true;
-      for (propertyName in viewModel) {
-        if (viewModel.hasOwnProperty(propertyName)) {
-          observable = viewModel[propertyName];
-          if (ko.validation.utils.hasValidators(observable)) {
-            ko.validation.utils.runValidations(observable);
-            valid = observable.isValid() && valid;
-          }
-        }
-      }
-
-      return valid;
-    };
   }
 
   function bindEventListenerToRunValidation(element, observableToValidate) {
@@ -224,7 +224,7 @@ ko.validation.registerValidator = function (name, validatorFactory) {
           });
         }
 
-        addValidateToViewModel(viewModel);
+        ko.validation.utils.addValidateToViewModel(viewModel);
       }
 
       return originalReturn;
