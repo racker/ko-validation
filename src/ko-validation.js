@@ -105,12 +105,9 @@ ko.validation.registerValidator = function (name, validatorFactory) {
       observable.isValid = ko.computed(function () {
         return observable.validationState() !== ko.validation.validationStates.INVALID;
       });
-      if (observable.__validatesOn__ !== 'inputChange') {
-        observable.__validatesOn__ = 'change';
-        observable.__validationSubscription__ = observable.subscribe(function () {
-          ko.validation.utils.runValidations(observable);
-        });
-      }
+      observable.subscribe(function () {
+        ko.validation.utils.runValidations(observable);
+      });
     }
 
     validator = ko.validation.utils.createValidator(name, param);
@@ -132,19 +129,6 @@ ko.validation.registerValidator = function (name, validatorFactory) {
     return validationElement;
   }
 
-  function bindEventListenerToRunValidation(element, observableToValidate) {
-    var elementType, eventName;
-
-    elementType = element.getAttribute('type');
-    eventName = (elementType && elementType.toLowerCase() === 'checkbox') ? 'click' : 'change';
-
-    ko.utils.registerEventHandler(element, eventName, function () {
-      if (ko.validation.utils.hasValidators(observableToValidate)) {
-        ko.validation.utils.runValidations(observableToValidate);
-      }
-    });
-  }
-
   function updateValidationMessage(element, observable) {
     ko.bindingHandlers.visible.update(element, function () {
       return observable.validationState() !== ko.validation.validationStates.PRISTINE;
@@ -159,9 +143,6 @@ ko.validation.registerValidator = function (name, validatorFactory) {
   }
 
   function initValidationFor(inputElement, observable) {
-    if (observable.__validatesOn__ === 'inputChange') {
-      bindEventListenerToRunValidation(inputElement, observable);
-    }
     var messageSubscription = observable.validationState.subscribe(function () {
       if (observable.__hasCustomValidationElement__) {
         messageSubscription.dispose();
@@ -175,17 +156,6 @@ ko.validation.registerValidator = function (name, validatorFactory) {
       messageSubscription.dispose();
     });
   }
-
-  ko.extenders.validatesOn = function (observable, eventName) {
-    if (eventName !== 'change' && eventName !== 'inputChange') {
-      throw new Error('Observable can be validated only on events "change" or "inputChange".');
-    }
-    observable.__validatesOn__ = eventName;
-    if (eventName === 'inputChange' && observable.__validationSubscription__) {
-      observable.__validationSubscription__.dispose();
-    }
-    return observable;
-  };
 
   ko.extenders.validatesAfter = function (observable, dependentObservables) {
     ko.utils.arrayForEach(dependentObservables, function (dependentObservable) {

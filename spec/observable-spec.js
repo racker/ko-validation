@@ -36,39 +36,6 @@ describe('observables validation', function () {
     expect(observable.isValid()).toBe(false);
   });
 
-  describe('when the observable is to be validated only on input changes', function () {
-    var observable, viewModel;
-
-    beforeEach(function () {
-      observable = ko.observable('Value').extend({
-        required: ['Value is required'],
-        validatesOn: 'inputChange'
-      });
-
-      viewModel = { obs: observable };
-
-      setFixtures('<div id="parent"><input id="input" data-bind="value: obs"/></div>');
-      ko.applyBindings(viewModel, $('#parent')[0]);
-    });
-
-    it('does not validate when the observable changes', function () {
-      expect(observable.isValid()).toBe(true);
-
-      observable('');
-
-      expect(observable.isValid()).toBe(true);
-    });
-
-    it('validates when the input changes', function () {
-      expect(observable.isValid()).toBe(true);
-
-      $('#input').val('').trigger('change');
-
-      expect(observable.isValid()).toBe(false);
-      expect(observable.validationMessage()).toBe('Value is required');
-    });
-  });
-
   describe('validating an input', function () {
     var observable, viewModel;
 
