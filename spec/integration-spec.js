@@ -29,7 +29,7 @@ describe('ko validation integration', function () {
     };
 
     viewModel = {
-      requiredField: ko.observable('').extend({
+      requiredField: ko.observable('First Name').extend({
         'required': ['First Name is required.']
       }),
       equalField: ko.observable(''),
@@ -66,7 +66,7 @@ describe('ko validation integration', function () {
       isItRequired: ko.observable(true)
     };
 
-    viewModel.sometimesRequired = ko.observable('').extend({
+    viewModel.sometimesRequired = ko.observable('Sometimes').extend({
       'onlyIf': [viewModel.isItRequired, { 'required': [ 'Sometimes' ] }]
     });
 

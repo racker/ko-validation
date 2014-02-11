@@ -105,6 +105,12 @@ ko.validation.registerValidator = function (name, validatorFactory) {
       observable.isValid = ko.computed(function () {
         return observable.validationState() !== ko.validation.validationStates.INVALID;
       });
+      if (observable.__validatesOn__ !== 'inputChange') {
+        observable.__validatesOn__ = 'change';
+        observable.__validationSubscription__ = observable.subscribe(function () {
+          ko.validation.utils.runValidations(observable);
+        });
+      }
     }
 
     validator = ko.validation.utils.createValidator(name, param);
@@ -153,11 +159,12 @@ ko.validation.registerValidator = function (name, validatorFactory) {
   }
 
   function initValidationFor(inputElement, observable) {
-    bindEventListenerToRunValidation(inputElement, observable);
-
-    var subscription = observable.validationState.subscribe(function () {
+    if (observable.__validatesOn__ === 'inputChange') {
+      bindEventListenerToRunValidation(inputElement, observable);
+    }
+    var messageSubscription = observable.validationState.subscribe(function () {
       if (observable.__hasCustomValidationElement__) {
-        subscription.dispose();
+        messageSubscription.dispose();
         return;
       }
       var validationElement = insertOrGetMessageElementAt(inputElement.parentNode);
@@ -165,9 +172,20 @@ ko.validation.registerValidator = function (name, validatorFactory) {
     });
 
     ko.utils.domNodeDisposal.addDisposeCallback(inputElement, function () {
-      subscription.dispose();
+      messageSubscription.dispose();
     });
   }
+
+  ko.extenders.validatesOn = function (observable, eventName) {
+    if (eventName !== 'change' && eventName !== 'inputChange') {
+      throw new Error('Observable can be validated only on events "change" or "inputChange".');
+    }
+    observable.__validatesOn__ = eventName;
+    if (eventName === 'inputChange' && observable.__validationSubscription__) {
+      observable.__validationSubscription__.dispose();
+    }
+    return observable;
+  };
 
   ko.extenders.validatesAfter = function (observable, dependentObservables) {
     ko.utils.arrayForEach(dependentObservables, function (dependentObservable) {

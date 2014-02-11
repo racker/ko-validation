@@ -3,7 +3,7 @@ describe('Validation message element', function () {
 
   beforeEach(function () {
     viewModel = {
-      firstName: ko.observable('').extend({
+      firstName: ko.observable('name').extend({
         'required': ['First Name is required.'],
         'maxLength': [10, 'Up to 10 chars, please.']
       })
