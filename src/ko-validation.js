@@ -150,6 +150,11 @@ ko.validation.registerValidator = function (name, validatorFactory) {
       };
     });
     ko.bindingHandlers.text.update(element, observable.validationMessage);
+    ko.bindingHandlers.css.update(element.parentNode, function () {
+      return {
+        'error': observable.validationState() === ko.validation.validationStates.INVALID
+      }
+    });
   }
 
   function initValidationFor(inputElement, observable) {
