@@ -53,6 +53,19 @@ describe('Validation message element', function () {
       validationElement = $($('#parent').children()[1]);
       expect(validationElement.text()).toBe('Up to 10 chars, please.');
     });
+
+    it('adds the "error" class to the validation element parent when a validation fails', function () {
+      $('#firstName').val('').trigger('change');
+
+      expect($('#parent').attr('class')).toContain('error');
+    });
+
+    it('removes the "error" class from the validation element parent when the validation is fixed', function () {
+      $('#firstName').val('').trigger('change');
+      $('#firstName').val('fixed').trigger('change');
+
+      expect($('#parent').attr('class')).not.toContain('error');
+    });
   });
 
   describe('when a custom validation element is specified', function () {
