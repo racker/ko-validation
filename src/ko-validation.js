@@ -105,6 +105,9 @@ ko.validation.registerValidator = function (name, validatorFactory) {
       observable.isValid = ko.computed(function () {
         return observable.validationState() !== ko.validation.validationStates.INVALID;
       });
+      observable.subscribe(function () {
+        ko.validation.utils.runValidations(observable);
+      });
     }
 
     validator = ko.validation.utils.createValidator(name, param);
@@ -126,19 +129,6 @@ ko.validation.registerValidator = function (name, validatorFactory) {
     return validationElement;
   }
 
-  function bindEventListenerToRunValidation(element, observableToValidate) {
-    var elementType, eventName;
-
-    elementType = element.getAttribute('type');
-    eventName = (elementType && elementType.toLowerCase() === 'checkbox') ? 'click' : 'change';
-
-    ko.utils.registerEventHandler(element, eventName, function () {
-      if (ko.validation.utils.hasValidators(observableToValidate)) {
-        ko.validation.utils.runValidations(observableToValidate);
-      }
-    });
-  }
-
   function updateValidationMessage(element, observable) {
     ko.bindingHandlers.visible.update(element, function () {
       return observable.validationState() !== ko.validation.validationStates.PRISTINE;
@@ -153,11 +143,9 @@ ko.validation.registerValidator = function (name, validatorFactory) {
   }
 
   function initValidationFor(inputElement, observable) {
-    bindEventListenerToRunValidation(inputElement, observable);
-
-    var subscription = observable.validationState.subscribe(function () {
+    var messageSubscription = observable.validationState.subscribe(function () {
       if (observable.__hasCustomValidationElement__) {
-        subscription.dispose();
+        messageSubscription.dispose();
         return;
       }
       var validationElement = insertOrGetMessageElementAt(inputElement.parentNode);
@@ -165,7 +153,7 @@ ko.validation.registerValidator = function (name, validatorFactory) {
     });
 
     ko.utils.domNodeDisposal.addDisposeCallback(inputElement, function () {
-      subscription.dispose();
+      messageSubscription.dispose();
     });
   }
 
