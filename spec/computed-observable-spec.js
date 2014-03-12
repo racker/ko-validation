@@ -41,4 +41,24 @@ describe('Computed observable validation', function () {
     expect(viewModel.fullName()).toBe('John');
     expect(viewModel.fullName.isValid()).toBe(true);
   });
+
+  it('throws an error when the dependent observables do not exist', function () {
+    function addValidatesAfterForUndefinedObservables() {
+      viewModel.fullName.extend({'validatesAfter': [undefined]});
+    }
+
+    expect(addValidatesAfterForUndefinedObservables).toThrow(
+      new Error('Invalid observable specified for "validatesAfter"')
+    );
+  });
+
+  it('throws an error when the specified dependent observables are not valid observables', function () {
+    function addValidatesAfterForUndefinedObservables() {
+      viewModel.fullName.extend({'validatesAfter': ['not-an-observable']});
+    }
+
+    expect(addValidatesAfterForUndefinedObservables).toThrow(
+      new Error('Invalid observable specified for "validatesAfter"')
+    );
+  });
 });

@@ -171,6 +171,9 @@ ko.validation.registerValidator = function (name, validatorFactory) {
 
   ko.extenders.validatesAfter = function (observable, dependentObservables) {
     ko.utils.arrayForEach(dependentObservables, function (dependentObservable) {
+      if (!ko.isObservable(dependentObservable)) {
+        throw new Error('Invalid observable specified for "validatesAfter"');
+      }
       dependentObservable.__validates__ = dependentObservable.__validates__ || [];
       dependentObservable.__validates__.push(observable);
     });
