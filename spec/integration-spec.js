@@ -19,6 +19,10 @@ describe('ko validation integration', function () {
       '<input id="regex-input" data-bind="value: regexField"/>' +
       '<input id="email-input" data-bind="value: emailField"/>' +
       '<input id="custom-input" data-bind="value: customField"/>' +
+      '<input name="cb-group" type="checkbox" value="cb-value-1" id="cb-input-1" data-bind="checked: checkboxField"/>' +
+      '<input name="cb-group" type="checkbox" value="cb-value-2" id="cb-input-2" data-bind="checked: checkboxField"/>' +
+      '<input name="cb-group" type="checkbox" value="cb-value-3" id="cb-input-3" data-bind="checked: checkboxField"/>' +
+      '<input name="cb-group" type="checkbox" value="cb-value-4" id="cb-input-4" data-bind="checked: checkboxField"/>' +
       '</div>';
 
     setFixtures(html);
@@ -62,6 +66,9 @@ describe('ko validation integration', function () {
       }),
       customField: ko.observable('').extend({
         'custom': [customValidatorFunction, customValidatorContext]
+      }),
+      checkboxField: ko.observableArray([]).extend({
+        'required': [ 'At least one checkbox must be selected!' ]
       }),
       isItRequired: ko.observable(true)
     };
@@ -255,6 +262,22 @@ describe('ko validation integration', function () {
       $('#custom-input').val('notFoo').trigger('change');
 
       expect(viewModel.customField).not.toBeValid();
+    });
+  });
+
+  describe('for checkbox fields', function () {
+    it('validates whenever a checkbox is clicked', function () {
+      $('#cb-input-2').click();
+
+      expect(viewModel.checkboxField()).toEqual(['cb-value-2']);
+      expect(viewModel.checkboxField.isValid()).toBe(true);
+      expect($('#parent').find('.validation-message').text()).toBe('');
+
+      $('#cb-input-2').click();
+
+      expect(viewModel.checkboxField()).toEqual([]);
+      expect(viewModel.checkboxField.isValid()).toBe(false);
+      expect($('#parent').find('.validation-message').text()).toBe('At least one checkbox must be selected!');
     });
   });
 });
