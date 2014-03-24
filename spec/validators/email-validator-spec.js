@@ -21,8 +21,8 @@ describe('ko.validators.emailValidator', function () {
     });
   });
 
-  it('is invalid for TLD bigger than 12 characters', function () {
-    result = validator.validate('knockout@validation.constructionS');
+  it('is invalid for TLD smaller than 2 characters', function () {
+    result = validator.validate('knockout@validation.a');
     expect(result).toEqual({
       isValid: false,
       message: 'Email address is not valid.'
