@@ -26,5 +26,13 @@ describe('ko.validators.integerValueValidator', function () {
     expect(validator.validate(888)).toEqual({ isValid: false, message: 'Not valid.' });
     expect(op).toHaveBeenCalledWith(888);
   });
+
+  it('is valid if value is undefined', function () {
+    op = jasmine.createSpy('op').andReturn(true);
+    validator = ko.validators.integerValueValidator(op);
+
+    expect(validator.validate()).toEqual({ isValid: true });
+    expect(op).not.toHaveBeenCalled();
+  });
 });
 
