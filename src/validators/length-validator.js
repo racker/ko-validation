@@ -1,7 +1,7 @@
 ko.validators.lengthValidator = function (operation, message) {
   return ko.validators.validatorWithMessage(
     function (value) {
-      if (!!value) {
+      if (ko.validators.utilities.isDefinedAndNotNull(value)) {
         return operation(value.toString().trim().length);
       }
       return true;

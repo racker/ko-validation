@@ -50,6 +50,10 @@ ko.validators.utilities = (function () {
     return typeof value === 'function' && Object.prototype.toString.call(value) === '[object Function]';
   };
 
+  self.isDefinedAndNotNull = function (value) {
+    return (value !== undefined) && (value !== null);
+  };
+
   self.identity = function (value) {
     return value;
   };
