@@ -86,6 +86,20 @@ describe('ko.validation.utilities', function () {
     });
   });
 
+  describe('isDefinedAndNotNull', function () {
+    it('is false for values that are null', function () {
+      expect(utilities.isDefinedAndNotNull(null)).toBe(false);
+    });
+
+    it('is false for values that are undefined', function () {
+      expect(utilities.isDefinedAndNotNull()).toBe(false);
+    });
+
+    it('is true for values that are defined and not null', function () {
+      expect(utilities.isDefinedAndNotNull(0)).toBe(true);
+    });
+  });
+
   describe('validateWithMessage', function () {
     it('returns a valid result when function returns true', function () {
       var validationFn, result;

@@ -8,7 +8,10 @@ ko.validators.integerValidator = function (message) {
 ko.validators.integerValueValidator = function (operation, message) {
   return ko.validators.validatorWithMessage(
     function (value) {
-      return ko.validators.utilities.isInteger(value) && operation(parseInt(value, 10));
+      if (ko.validators.utilities.isDefinedAndNotNull(value)) {
+        return ko.validators.utilities.isInteger(value) && operation(parseInt(value, 10));
+      }
+      return true;
     },
     message
   );

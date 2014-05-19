@@ -47,5 +47,10 @@ describe('ko.validators.rangeValidator', function () {
       message: 'Must be between 1 and 10.'
     });
   });
+
+  it('should pass if value is undefined', function () {
+    result = validator.validate();
+    expect(result.isValid).toBe(true);
+  });
 });
 

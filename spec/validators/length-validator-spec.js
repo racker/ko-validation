@@ -16,5 +16,13 @@ describe('ko.validators.lengthValidator', function () {
     expect(validator.validate('five')).toEqual({ isValid: false, message: 'Not valid.' });
     expect(op).toHaveBeenCalledWith('five'.length);
   });
+
+  it('is valid value is undefined', function () {
+    op = jasmine.createSpy('op').andReturn(true);
+    validator = ko.validators.lengthValidator(op);
+
+    expect(validator.validate()).toEqual({ isValid: true });
+    expect(op).not.toHaveBeenCalled();
+  });
 });
 
