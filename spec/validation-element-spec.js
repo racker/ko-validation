@@ -100,5 +100,16 @@ describe('Validation message element', function () {
       expect(messageElement).toHaveClass('validation-message');
       expect(messageElement).toHaveClass('validation-fixed');
     });
+
+    it('does not throw an error when the element is removed from the dom and the validation is triggered', function () {
+      function removeValidationMessageElementAndValidate() {
+        $('#messageElement').remove();
+
+        $('#firstName').val('').trigger('change');
+        $('#firstName').val('Chuck').trigger('change');
+      }
+
+      expect(removeValidationMessageElementAndValidate).not.toThrow();
+    });
   });
 });

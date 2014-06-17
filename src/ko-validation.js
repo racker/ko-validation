@@ -140,11 +140,13 @@ ko.validation.registerValidator = function (name, validatorFactory) {
       };
     });
     ko.bindingHandlers.text.update(element, observable.validationMessage);
-    ko.bindingHandlers.css.update(element.parentNode, function () {
-      return {
-        'error': observable.validationState() === ko.validation.validationStates.INVALID
-      };
-    });
+    if (element.parentNode) {
+      ko.bindingHandlers.css.update(element.parentNode, function () {
+        return {
+          'error': observable.validationState() === ko.validation.validationStates.INVALID
+        };
+      });
+    }
   }
 
   function initValidationFor(inputElement, observable) {
@@ -184,8 +186,9 @@ ko.validation.registerValidator = function (name, validatorFactory) {
 
   ko.bindingHandlers.validationMessage = {
     init: function (element, valueAccessor) {
-      var observable = valueAccessor();
+      var observable, subscription;
 
+      observable = valueAccessor();
       if (!ko.validation.utils.hasValidators(observable)) {
         throw new Error("'validationMessage' should be used with an observable that has validation");
       }
@@ -194,8 +197,11 @@ ko.validation.registerValidator = function (name, validatorFactory) {
       ko.bindingHandlers.css.update(element, function () {
         return { 'validation-message': true };
       });
-      observable.validationState.subscribe(function () {
+      subscription = observable.validationState.subscribe(function () {
         updateValidationMessage(element, observable);
+      });
+      ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+        subscription.dispose();
       });
     }
   };
