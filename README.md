@@ -41,7 +41,7 @@ Currently the following rules are supported:
 * Range `range`
 * Regex `regex`
 * Email `email`
-* Invalid Charachters `invalidChars`
+* Invalid Characters `invalidChars`
 * Required Only If `onlyIf`
 * Custom `custom`
 
